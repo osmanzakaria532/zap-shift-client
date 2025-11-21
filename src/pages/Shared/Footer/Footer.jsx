@@ -7,7 +7,7 @@ import Logo from '../../../components/Logo/Logo';
 const Footer = () => {
   return (
     <>
-      <footer className="text-primary-content p-10">
+      <footer className="text-primary-content py-10">
         <Container className="footer footer-horizontal footer-center bg-[#0B0B0B] py-20 rounded-lg">
           <aside>
             <Logo target="/" />

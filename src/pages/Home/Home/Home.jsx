@@ -1,12 +1,13 @@
-import Container from '../../../components/Logo/Container';
 import Banner from '../Banner/Banner';
+import WorkingProcess from '../WorkingProcess/WorkingProcess';
 
 const Home = () => {
   return (
     <div>
-      <Container className="py-10">
+      <div className="py-10">
         <Banner />
-      </Container>
+        <WorkingProcess />
+      </div>
     </div>
   );
 };
