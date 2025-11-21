@@ -15,7 +15,7 @@ const brandsLogo = [brandImg1, brandImg2, brandImg3, brandImg4, brandImg5, brand
 
 const Brands = () => {
   return (
-    <div className="py-10">
+    <div className="py-10 mt-24">
       <h2 className="text-center text-3xl font-extrabold mb-10 text-secondary">
         We've helped thousands of sales teams
       </h2>

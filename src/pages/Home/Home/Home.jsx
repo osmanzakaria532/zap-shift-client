@@ -1,6 +1,7 @@
 import Banner from '../Banner/Banner';
 import Brands from '../brands/brands';
 import Services from '../Services/Services';
+import TDS from '../TDS/TDS';
 import WorkingProcess from '../WorkingProcess/WorkingProcess';
 
 const Home = () => {
@@ -11,6 +12,8 @@ const Home = () => {
         <WorkingProcess />
         <Services />
         <Brands />
+        {/* Tracking, Delivery & Support */}
+        <TDS />
       </div>
     </div>
   );
