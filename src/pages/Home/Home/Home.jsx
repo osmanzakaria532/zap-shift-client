@@ -1,11 +1,11 @@
-import React from 'react';
 import Container from '../../../components/Logo/Container';
+import Banner from '../Banner/Banner';
 
 const Home = () => {
   return (
     <div>
       <Container className="py-10">
-        <h2>This is home page</h2>
+        <Banner />
       </Container>
     </div>
   );
