@@ -9,7 +9,7 @@ import brandImg4 from '../../../../src/assets/brands/moonstar.png';
 import brandImg5 from '../../../../src/assets/brands/randstad.png';
 import brandImg6 from '../../../../src/assets/brands/star.png';
 import brandImg7 from '../../../../src/assets/brands/start_people.png';
-import Container from '../../../components/Logo/Container';
+import Container from '../../../components/Container';
 
 const brandsLogo = [brandImg1, brandImg2, brandImg3, brandImg4, brandImg5, brandImg6, brandImg7];
 

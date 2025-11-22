@@ -1,5 +1,5 @@
 import ServiceImg from '../../../../src/assets/service.png';
-import Container from '../../../components/Logo/Container';
+import Container from '../../../components/Container';
 
 const Services = () => {
   const services = [

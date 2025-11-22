@@ -9,7 +9,7 @@ import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import { useRef } from 'react';
 import { useLoaderData } from 'react-router';
-import Container from '../../../components/Logo/Container';
+import Container from '../../components/Container';
 
 delete L.Icon.Default.prototype._getIconUrl;
 

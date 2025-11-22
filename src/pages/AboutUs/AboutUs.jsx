@@ -1,7 +1,6 @@
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-
-import Container from '../../components/Logo/Container';
+import Container from '../../components/Container';
 
 const AboutUs = () => {
   return (

@@ -1,21 +1,18 @@
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import Container from '../../../components/Logo/Container';
 
 import { MdArrowOutward } from 'react-icons/md';
 import { Link } from 'react-router';
 import bannerImg1 from '../../../../src/assets/banner/banner1.png';
 import bannerImg2 from '../../../../src/assets/banner/banner2.png';
 import bannerImg3 from '../../../../src/assets/banner/banner3.png';
+import Container from '../../../components/Container';
 
 const Banner = () => {
   return (
     <div>
       <Container>
-        <Carousel
-        // autoPlay={true}
-        //  infiniteLoop={true}
-        >
+        <Carousel autoPlay={true} infiniteLoop={true}>
           <div className="relative">
             <img src={bannerImg1} />
             <div className="space-x-2.5 absolute left-20 bottom-20 z-50 flex items-center">

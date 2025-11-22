@@ -1,6 +1,6 @@
 import topImg from '../../../../src/assets/be-a-merchant-bg.png';
 import merchantBox from '../../../../src/assets/location-merchant.png';
-import Container from '../../../components/Logo/Container';
+import Container from '../../../components/Container';
 
 const CustomerSatisfaction = () => {
   return (

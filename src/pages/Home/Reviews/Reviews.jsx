@@ -2,9 +2,8 @@ import { use } from 'react';
 import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import cusmTop from '../../../../src/assets/customer-top.png';
-import Container from '../../../components/Logo/Container';
+import Container from '../../../components/Container';
 import ReviewCard from './ReviewCard';
-import { CgOverflow } from 'react-icons/cg';
 
 const Reviews = ({ reviewsPromise }) => {
   const reviews = use(reviewsPromise);

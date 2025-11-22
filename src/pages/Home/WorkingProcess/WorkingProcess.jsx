@@ -1,4 +1,4 @@
-import Container from '../../../components/Logo/Container';
+import Container from '../../../components/Container';
 
 import WorkingProcessImg from '../../../../src/assets/WorkingProcessImg.png';
 

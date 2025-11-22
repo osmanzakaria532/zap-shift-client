@@ -1,6 +1,6 @@
 import trackingImg from '../../../../src/assets/tds/live-tracking.png';
 import delivaryImg from '../../../../src/assets/tds/safe-delivery.png';
-import Container from '../../../components/Logo/Container';
+import Container from '../../../components/Container';
 
 const TDS = () => {
   const tds_content = [
