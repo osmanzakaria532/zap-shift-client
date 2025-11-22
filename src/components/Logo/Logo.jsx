@@ -1,10 +1,10 @@
 import { Link } from 'react-router';
 import logo from '../../../src/assets/logo.png';
 
-const Logo = ({ target = '' }) => {
+const Logo = ({ target = '', className = '' }) => {
   return (
     <Link to={`${target}`}>
-      <img src={logo} alt="" />
+      <img src={logo} alt="" className={`${className}`} />
     </Link>
   );
 };

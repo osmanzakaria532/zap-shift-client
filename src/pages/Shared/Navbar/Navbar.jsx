@@ -1,10 +1,27 @@
 import { MdArrowOutward } from 'react-icons/md';
 import { Link } from 'react-router';
+import { useEffect, useState } from 'react';
 
 import Container from '../../../components/Container';
 import Logo from '../../../components/Logo/Logo';
 
 const Navbar = () => {
+  const [isSmall, setIsSmall] = useState(false);
+
+  // Handle Scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsSmall(true);
+      } else {
+        setIsSmall(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const links = (
     <>
       <li>
@@ -24,29 +41,41 @@ const Navbar = () => {
       </li>
     </>
   );
+
   return (
-    <div className="bg-base-100 shadow-sm sticky top-0 left-0 z-50">
-      {/* sticky top-0 left-0 z-50 */}
-      <Container className="navbar px-0">
+    <div
+      className={`bg-base-100 shadow-sm sticky top-0 left-0 z-50 transition-all duration-300 ${
+        isSmall ? 'py-1' : 'py-2'
+      }`}
+    >
+      <Container className="navbar px-0 transition-all duration-300">
+        {/* Left */}
         <div className="navbar-start">
+          {/* Mobile Menu */}
           <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+            <div
+              tabIndex={0}
+              role="button"
+              className={`btn btn-ghost lg:hidden transition-all duration-300 ${
+                isSmall ? 'px-2 py-1' : 'px-3 py-2'
+              }`}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
+                className={`${isSmall ? 'h-4 w-4' : 'h-5 w-5'}`}
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                {' '}
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth="2"
                   d="M4 6h16M4 12h8m-8 6h16"
-                />{' '}
+                />
               </svg>
             </div>
+
             <ul
               tabIndex="-1"
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
@@ -55,17 +84,48 @@ const Navbar = () => {
             </ul>
           </div>
 
-          <Logo target="/" />
+          {/* Logo */}
+          <Logo target="/" className={`transition-all duration-300 ${isSmall ? 'w-20' : 'w-32'}`} />
         </div>
+
+        {/* Center Menu */}
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{links}</ul>
+          <ul
+            className={`menu menu-horizontal px-1 transition-all duration-300 ${
+              isSmall ? 'text-sm gap-2' : 'text-base gap-4'
+            }`}
+          >
+            {links}
+          </ul>
         </div>
-        <div className="navbar-end space-x-1.5 ">
-          <a className="btn rounded-md bg-white">Sign In</a>
-          <a className="flex items-center gap-2.5">
-            <span className="btn rounded-md bg-primary">Be a rider</span>
-            <span className="bg-primary w-10 h-10 rounded-full flex justify-center items-center">
-              <MdArrowOutward className="text-xl" />
+
+        {/* Right Buttons */}
+        <div className="navbar-end space-x-1.5 transition-all duration-300">
+          <a
+            className={`btn rounded-md bg-white transition-all duration-300 ${
+              isSmall ? 'px-3 py-1 text-sm' : 'px-5 py-2 text-base'
+            }`}
+          >
+            Sign In
+          </a>
+
+          <a className="flex items-center gap-2">
+            <span
+              className={`btn rounded-md bg-primary transition-all duration-300 ${
+                isSmall ? 'px-3 py-1 text-sm' : 'px-5 py-2 text-base'
+              }`}
+            >
+              Be a rider
+            </span>
+
+            <span
+              className={`bg-primary rounded-full flex justify-center items-center transition-all duration-300 ${
+                isSmall ? 'w-8 h-8' : 'w-10 h-10'
+              }`}
+            >
+              <MdArrowOutward
+                className={`transition-all duration-300 ${isSmall ? 'text-lg' : 'text-xl'}`}
+              />
             </span>
           </a>
         </div>
