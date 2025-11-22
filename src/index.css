@@ -21,3 +21,22 @@ body {
   font-style: normal;
   background: #eaeced;
 }
+
+/* About us -> Css */
+
+.react-tabs__tab {
+  /* padding-right: 12px !important; */
+  padding-left: 0 !important;
+  font-size: 24px;
+  font-weight: 300;
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.react-tabs__tab-list {
+  border-bottom: none !important;
+  margin-bottom: 26px;
+}
+
+.react-tabs__tab--selected {
+  border: none !important;
+}

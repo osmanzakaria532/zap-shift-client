@@ -11,16 +11,13 @@ const Navbar = () => {
         <Link to="#">Services</Link>
       </li>
       <li>
-        <Link to="#">Coverage</Link>
+        <Link to="/coverage">Coverage</Link>
       </li>
       <li>
-        <Link to="#">About Us</Link>
+        <Link to="/about-us">About Us</Link>
       </li>
       <li>
         <Link to="#">Pricing</Link>
-      </li>
-      <li>
-        <Link to="/coverage">Converage</Link>
       </li>
       <li>
         <Link to="#">Be a Rider</Link>
@@ -28,7 +25,7 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className="bg-base-100 shadow-sm ">
+    <div className="bg-base-100 shadow-sm sticky top-0 left-0 z-50">
       {/* sticky top-0 left-0 z-50 */}
       <Container className="navbar px-0">
         <div className="navbar-start">
