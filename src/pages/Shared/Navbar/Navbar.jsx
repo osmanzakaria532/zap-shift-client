@@ -1,12 +1,17 @@
+import { useEffect, useState } from 'react';
 import { MdArrowOutward } from 'react-icons/md';
 import { Link } from 'react-router';
-import { useEffect, useState } from 'react';
 
 import Container from '../../../components/Container';
 import Logo from '../../../components/Logo/Logo';
+import useAuth from '../../../hooks/useAuth';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
+  // state to handle navbar size on scroll
   const [isSmall, setIsSmall] = useState(false);
+  // get user from auth context
+  const { user, logOut } = useAuth();
 
   // Handle Scroll
   useEffect(() => {
@@ -21,6 +26,17 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {
+        console.log('User logged out successfully');
+        toast.success('Logged out successfully');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const links = (
     <>
@@ -37,7 +53,7 @@ const Navbar = () => {
         <Link to="#">Pricing</Link>
       </li>
       <li>
-        <Link to="#">Be a Rider</Link>
+        <Link to="/riderkog">Be a Rider</Link>
       </li>
     </>
   );
@@ -101,13 +117,25 @@ const Navbar = () => {
 
         {/* Right Buttons */}
         <div className="navbar-end space-x-1.5 transition-all duration-300">
-          <a
-            className={`btn rounded-md bg-white transition-all duration-300 ${
-              isSmall ? 'px-3 py-1 text-sm' : 'px-5 py-2 text-base'
-            }`}
-          >
-            Sign In
-          </a>
+          {user ? (
+            <button
+              onClick={handleLogOut}
+              className={`btn rounded-md bg-white transition-all duration-300 ${
+                isSmall ? 'px-3 py-1 text-sm' : 'px-5 py-2 text-base'
+              }`}
+            >
+              Log Out
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              className={`btn rounded-md bg-white transition-all duration-300 ${
+                isSmall ? 'px-3 py-1 text-sm' : 'px-5 py-2 text-base'
+              }`}
+            >
+              Log In
+            </Link>
+          )}
 
           <a className="flex items-center gap-2">
             <span
