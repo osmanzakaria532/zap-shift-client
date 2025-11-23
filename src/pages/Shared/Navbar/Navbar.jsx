@@ -53,7 +53,7 @@ const Navbar = () => {
         <Link to="#">Pricing</Link>
       </li>
       <li>
-        <Link to="/riderkog">Be a Rider</Link>
+        <Link to="/rider">Be a Rider</Link>
       </li>
     </>
   );
