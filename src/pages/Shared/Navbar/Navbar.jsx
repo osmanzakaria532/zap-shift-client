@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { MdArrowOutward } from 'react-icons/md';
-import { Link } from 'react-router';
+import { Link, NavLink } from 'react-router';
 
+import { toast } from 'react-toastify';
 import Container from '../../../components/Container';
 import Logo from '../../../components/Logo/Logo';
 import useAuth from '../../../hooks/useAuth';
-import { toast } from 'react-toastify';
 
 const Navbar = () => {
   // state to handle navbar size on scroll
@@ -41,19 +41,57 @@ const Navbar = () => {
   const links = (
     <>
       <li>
-        <Link to="#">Services</Link>
+        <NavLink
+          to="/services"
+          className={({ isActive }) => (isActive ? 'text-blue-500' : 'text-black')}
+        >
+          Services
+        </NavLink>
       </li>
+
       <li>
-        <Link to="/coverage">Coverage</Link>
+        <NavLink
+          to="/coverage"
+          className={({ isActive }) => (isActive ? 'text-blue-500' : 'text-black')}
+        >
+          Coverage
+        </NavLink>
       </li>
+
       <li>
-        <Link to="/about-us">About Us</Link>
+        <NavLink
+          to="/about-us"
+          className={({ isActive }) => (isActive ? 'text-blue-500' : 'text-black')}
+        >
+          About Us
+        </NavLink>
       </li>
+
       <li>
-        <Link to="#">Pricing</Link>
+        <NavLink
+          to="/pricing"
+          className={({ isActive }) => (isActive ? 'text-blue-500' : 'text-black')}
+        >
+          Pricing
+        </NavLink>
       </li>
+
       <li>
-        <Link to="/rider">Be a Rider</Link>
+        <NavLink
+          to="/send-parcel"
+          className={({ isActive }) => (isActive ? 'text-blue-500' : 'text-black')}
+        >
+          Send Parcel
+        </NavLink>
+      </li>
+
+      <li>
+        <NavLink
+          to="/rider"
+          className={({ isActive }) => (isActive ? 'text-blue-500' : 'text-black')}
+        >
+          Be a Rider
+        </NavLink>
       </li>
     </>
   );
@@ -107,7 +145,7 @@ const Navbar = () => {
         {/* Center Menu */}
         <div className="navbar-center hidden lg:flex">
           <ul
-            className={`menu menu-horizontal px-1 transition-all duration-300 ${
+            className={`ul-style menu menu-horizontal px-1 transition-all duration-300 ${
               isSmall ? 'text-sm gap-2' : 'text-base gap-4'
             }`}
           >

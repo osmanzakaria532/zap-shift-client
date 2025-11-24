@@ -40,3 +40,8 @@ body {
 .react-tabs__tab--selected {
   border: none !important;
 }
+
+/* Navbar Css */
+.ul-style li > a.active {
+  @apply text-primary font-semibold;
+}

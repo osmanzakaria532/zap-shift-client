@@ -8,8 +8,9 @@ import Register from '../pages/Auth/Register/Register';
 import Coverage from '../pages/Coverage/Coverage';
 import Home from '../pages/Home/Home/Home';
 import NotFound from '../pages/NotFound/NotFound';
-import PrivateRoute from './PrivateRoute';
 import Rider from '../pages/Rider/Rider';
+import SendParcel from '../pages/SendParcel/SendParcel';
+import PrivateRoute from './PrivateRoute';
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
         Component: Home,
       },
       {
+        path: 'services',
+        element: <div>Services Page Coming Soon</div>,
+      },
+      {
         path: 'coverage',
         Component: Coverage,
         loader: () => fetch('/serviceCenters.json').then((res) => res.json()),
@@ -28,6 +33,19 @@ export const router = createBrowserRouter([
       {
         path: 'about-us',
         Component: AboutUs,
+      },
+      {
+        path: 'pricing',
+        element: <div>Pricing Page Coming Soon</div>,
+      },
+      {
+        path: 'send-parcel',
+        element: (
+          <PrivateRoute>
+            <SendParcel />
+          </PrivateRoute>
+        ),
+        loader: () => fetch('/serviceCenters.json').then((res) => res.json()),
       },
       {
         path: 'rider',
