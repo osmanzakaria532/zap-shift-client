@@ -2,9 +2,16 @@ import { useForm, useWatch } from 'react-hook-form';
 import { useLoaderData } from 'react-router';
 import Swal from 'sweetalert2';
 import Container from '../../components/Container';
+import useAuth from '../../hooks/useAuth';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const SendParcel = () => {
   const { register, handleSubmit, control } = useForm();
+  // get secure axios instance
+  const axiosSecure = useAxiosSecure();
+
+  // get user data from auth context
+  const { user } = useAuth();
 
   // get service centers data from loader
   const serviceCenters = useLoaderData();
@@ -53,7 +60,7 @@ const SendParcel = () => {
     console.log('Total cost:', cost);
     Swal.fire({
       title: 'aggree with the cost?',
-      text: "You won't be able to revert this!",
+      text: `You will be charged! ${cost} BDT`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -61,11 +68,16 @@ const SendParcel = () => {
       confirmButtonText: 'Yes, Take it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: 'Deleted!',
-          text: 'Your file has been deleted.',
-          icon: 'success',
+        // post parcel data to server
+        axiosSecure.post('/parcels', data).then((res) => {
+          console.log('after saving data', res.data);
         });
+
+        // Swal.fire({
+        //   title: 'Deleted!',
+        //   text: 'Your file has been deleted.',
+        //   icon: 'success',
+        // });
       }
     });
   };
@@ -140,6 +152,7 @@ const SendParcel = () => {
                       type="text"
                       className="input w-full"
                       placeholder="Sender Name"
+                      defaultValue={user?.displayName}
                       {...register('senderName')}
                     />
                   </div>
@@ -150,6 +163,8 @@ const SendParcel = () => {
                       type="email"
                       className="input w-full"
                       placeholder="Sender Email"
+                      defaultValue={user?.email}
+                      readOnly
                       {...register('senderEmail')}
                     />
                   </div>

@@ -85,6 +85,19 @@ const Navbar = () => {
         </NavLink>
       </li>
 
+      {user && (
+        <>
+          <li>
+            <NavLink
+              to="/dashboard/my-parcels"
+              className={({ isActive }) => (isActive ? 'text-blue-500' : 'text-black')}
+            >
+              My Parcels
+            </NavLink>
+          </li>
+        </>
+      )}
+
       <li>
         <NavLink
           to="/rider"
@@ -146,7 +159,7 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul
             className={`ul-style menu menu-horizontal px-1 transition-all duration-300 ${
-              isSmall ? 'text-sm gap-2' : 'text-base gap-4'
+              isSmall ? 'text-sm gap-1' : 'text-base gap-2'
             }`}
           >
             {links}

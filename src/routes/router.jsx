@@ -1,11 +1,14 @@
 import { createBrowserRouter } from 'react-router';
 import AuthLayout from '../Layouts/AuthLayout';
+import DashboardLayout from '../Layouts/DashboardLayout';
 import RootLayout from '../Layouts/RootLayout';
 import AboutUs from '../pages/AboutUs/AboutUs';
 import ForgotPassword from '../pages/Auth/ForgotPassword/ForgotPassword';
 import Login from '../pages/Auth/Login/Login';
 import Register from '../pages/Auth/Register/Register';
 import Coverage from '../pages/Coverage/Coverage';
+import MyParcels from '../pages/Dashboard/MyParcels/MyParcels';
+import Settings from '../pages/Dashboard/Settings/Settings';
 import Home from '../pages/Home/Home/Home';
 import NotFound from '../pages/NotFound/NotFound';
 import Rider from '../pages/Rider/Rider';
@@ -79,6 +82,24 @@ export const router = createBrowserRouter([
       {
         path: 'forgot-password',
         Component: ForgotPassword,
+      },
+    ],
+  },
+  {
+    path: 'dashboard',
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: 'my-parcels',
+        Component: MyParcels,
+      },
+      {
+        path: 'settings',
+        Component: Settings,
       },
     ],
   },
