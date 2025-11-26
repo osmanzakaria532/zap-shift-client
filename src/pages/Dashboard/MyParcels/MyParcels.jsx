@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query';
 import { FaRegEdit } from 'react-icons/fa';
 import { GoUnverified } from 'react-icons/go';
 import { MdDeleteSweep } from 'react-icons/md';
-import { Link } from 'react-router';
 import Swal from 'sweetalert2';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
@@ -53,6 +52,23 @@ const MyParcels = () => {
       }
     });
   };
+
+  // handle pament
+  const handlePayment = async (parcel) => {
+    console.log(parcel);
+
+    const paymentInfo = {
+      cost: parcel.cost,
+      parcelId: parcel._id,
+      senderEmail: parcel.senderEmail,
+      parcelName: parcel.parcelName,
+    };
+
+    const res = await axiosSecure.post('/payment-checkout-session', paymentInfo);
+    console.log(res.data);
+    //
+    window.location.assign(res.data.url);
+  };
   return (
     <div>
       <h3>my parcels : {parcels.length}</h3>
@@ -80,12 +96,21 @@ const MyParcels = () => {
                 <td>{parcel.parcelType}</td>
                 <td>{parcel.parcelWeight}</td>
                 <td>
-                  {parcel.delivaryStatus === 'paid' ? (
-                    <span className="text-gray-400">Paid</span>
+                  {parcel.paymentStatus === 'paid' ? (
+                    <span className="text-black btn btn-sm btn-square bg-primary">Paid</span>
                   ) : (
-                    <Link to={`/dashboard/payment/${parcel._id}`}>
+                    <>
+                      {/* <Link to={`/dashboard/payment/${parcel._id}`}>
                       <button className="btn btn-sm btn-square hover:bg-primary">Pay</button>
-                    </Link>
+                    </Link> */}
+
+                      <button
+                        onClick={() => handlePayment(parcel)}
+                        className="btn btn-sm btn-square hover:bg-primary"
+                      >
+                        Pay
+                      </button>
+                    </>
                   )}
                 </td>
                 <td>Blue</td>

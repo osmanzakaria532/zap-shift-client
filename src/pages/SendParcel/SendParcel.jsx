@@ -1,5 +1,5 @@
 import { useForm, useWatch } from 'react-hook-form';
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import Container from '../../components/Container';
 import useAuth from '../../hooks/useAuth';
@@ -9,6 +9,8 @@ const SendParcel = () => {
   const { register, handleSubmit, control, reset } = useForm();
   // get secure axios instance
   const axiosSecure = useAxiosSecure();
+
+  const navigate = useNavigate();
 
   // get user data from auth context
   const { user } = useAuth();
@@ -66,20 +68,25 @@ const SendParcel = () => {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, Take it!',
+      confirmButtonText: 'Confirm and Contiue Payment!',
     }).then((result) => {
       if (result.isConfirmed) {
         // post parcel data to server
         axiosSecure.post('/parcels', data).then((res) => {
           console.log('after saving data', res.data);
+
+          if (res.data.insertedId) {
+            navigate('/dashboard/my-parcels');
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Your work has been saved',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
         });
         reset();
-
-        // Swal.fire({
-        //   title: 'Deleted!',
-        //   text: 'Your file has been deleted.',
-        //   icon: 'success',
-        // });
       }
     });
   };
