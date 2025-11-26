@@ -8,6 +8,8 @@ import Login from '../pages/Auth/Login/Login';
 import Register from '../pages/Auth/Register/Register';
 import Coverage from '../pages/Coverage/Coverage';
 import MyParcels from '../pages/Dashboard/MyParcels/MyParcels';
+import Payment from '../pages/Dashboard/Payment/Payment';
+import PaymentSuccess from '../pages/Dashboard/Payment/PaymentSuccess/PaymentSuccess';
 import Settings from '../pages/Dashboard/Settings/Settings';
 import Home from '../pages/Home/Home/Home';
 import NotFound from '../pages/NotFound/NotFound';
@@ -96,6 +98,18 @@ export const router = createBrowserRouter([
       {
         path: 'my-parcels',
         Component: MyParcels,
+      },
+      {
+        path: 'payment/:parcelId',
+        Component: Payment,
+      },
+      {
+        path: 'payment-success',
+        Component: PaymentSuccess,
+      },
+      {
+        path: 'payment-cancelled',
+        element: <p>payment-cancelled</p>,
       },
       {
         path: 'settings',

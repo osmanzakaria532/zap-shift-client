@@ -6,7 +6,7 @@ import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const SendParcel = () => {
-  const { register, handleSubmit, control } = useForm();
+  const { register, handleSubmit, control, reset } = useForm();
   // get secure axios instance
   const axiosSecure = useAxiosSecure();
 
@@ -58,6 +58,7 @@ const SendParcel = () => {
       }
     }
     console.log('Total cost:', cost);
+    data.cost = cost;
     Swal.fire({
       title: 'aggree with the cost?',
       text: `You will be charged! ${cost} BDT`,
@@ -72,6 +73,7 @@ const SendParcel = () => {
         axiosSecure.post('/parcels', data).then((res) => {
           console.log('after saving data', res.data);
         });
+        reset();
 
         // Swal.fire({
         //   title: 'Deleted!',

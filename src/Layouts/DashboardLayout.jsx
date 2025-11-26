@@ -42,7 +42,12 @@ const DashboardLayout = () => {
               )}
             </div>
             <div>
-              <h2>{user?.displayName ? user?.displayName : 'User Name'}</h2>
+              <h2>
+                {user?.displayName
+                  ? user.displayName.split(' ').slice(0, 2).join(' ') +
+                    (user.displayName.split(' ').length > 2 ? ' ...' : '')
+                  : 'User Name'}
+              </h2>
               <h6>customer</h6>
             </div>
             <div>
