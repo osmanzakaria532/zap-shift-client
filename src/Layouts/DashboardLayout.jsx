@@ -2,6 +2,7 @@ import { BsBox } from 'react-icons/bs';
 import { IoIosArrowDown, IoIosNotificationsOutline } from 'react-icons/io';
 import { Link, NavLink, Outlet } from 'react-router';
 import useAuth from '../hooks/useAuth';
+import { FaHistory } from 'react-icons/fa';
 
 const DashboardLayout = () => {
   const { user } = useAuth();
@@ -92,7 +93,7 @@ const DashboardLayout = () => {
             </li>
 
             {/* Our Links hare */}
-
+            {/* My Parcel */}
             <li>
               <NavLink
                 to="/dashboard/my-parcels"
@@ -105,6 +106,22 @@ const DashboardLayout = () => {
               >
                 <BsBox className="inline-block" />
                 <span className="is-drawer-close:hidden">My Parcels</span>
+              </NavLink>
+            </li>
+
+            {/* Paymeny History */}
+            <li>
+              <NavLink
+                to="/dashboard/payment-history"
+                className={({ isActive }) =>
+                  `${
+                    isActive ? 'text-black bg-primary' : 'text-black'
+                  } is-drawer-close:tooltip is-drawer-close:tooltip-right`
+                }
+                data-tip="Payment History"
+              >
+                <FaHistory className="inline-block" />
+                <span className="is-drawer-close:hidden">Payment History</span>
               </NavLink>
             </li>
 

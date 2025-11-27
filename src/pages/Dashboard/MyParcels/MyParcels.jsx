@@ -24,7 +24,7 @@ const MyParcels = () => {
   // Handle delete parcel
   const handleParcelDelete = (parcelId) => {
     // Implement delete functionality here
-    console.log('Delete parcel with ID:', parcelId);
+    // console.log('Delete parcel with ID:', parcelId);
 
     // Confirmation dialog
     Swal.fire({

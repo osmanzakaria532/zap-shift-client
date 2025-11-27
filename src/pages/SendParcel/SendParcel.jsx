@@ -276,7 +276,7 @@ const SendParcel = () => {
                   <div className="w-full">
                     <legend className="fieldset-legend">Receiver Contact No</legend>
                     <input
-                      type="text"
+                      type="number"
                       className="input w-full"
                       placeholder="Receiver Contact No"
                       {...register('receiverContactNo')}

@@ -9,6 +9,7 @@ import Register from '../pages/Auth/Register/Register';
 import Coverage from '../pages/Coverage/Coverage';
 import MyParcels from '../pages/Dashboard/MyParcels/MyParcels';
 import Payment from '../pages/Dashboard/Payment/Payment';
+import PaymentHistory from '../pages/Dashboard/Payment/PaymentHistory/PaymentHistory';
 import PaymentSuccess from '../pages/Dashboard/Payment/PaymentSuccess/PaymentSuccess';
 import Settings from '../pages/Dashboard/Settings/Settings';
 import Home from '../pages/Home/Home/Home';
@@ -106,6 +107,10 @@ export const router = createBrowserRouter([
       {
         path: 'payment-success',
         Component: PaymentSuccess,
+      },
+      {
+        path: 'payment-history',
+        Component: PaymentHistory,
       },
       {
         path: 'payment-cancelled',
