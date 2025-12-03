@@ -70,6 +70,7 @@ const PaymentHistory = () => {
               <th>Recipient Info</th>
               <th>Tracking Number</th>
               <th>Payment Info</th>
+              <th>Paid At</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -81,6 +82,7 @@ const PaymentHistory = () => {
                 <td>Quality Control Specialist</td>
                 <td>{payment?.trackingId?.slice(-8) || 'N/A'}</td>
                 <td>$ {payment.amount}</td>
+                <td>{payment.paidAt}</td>
                 <td className="space-x-2.5">
                   <button
                     onClick={() => handlePaymentDetails(payment._id)}

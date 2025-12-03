@@ -17,6 +17,7 @@ import NotFound from '../pages/NotFound/NotFound';
 import Rider from '../pages/Rider/Rider';
 import SendParcel from '../pages/SendParcel/SendParcel';
 import PrivateRoute from './PrivateRoute';
+import ApproveRiders from '../pages/Dashboard/ApproveRiders/ApproveRiders';
 
 export const router = createBrowserRouter([
   {
@@ -60,6 +61,7 @@ export const router = createBrowserRouter([
             <Rider />
           </PrivateRoute>
         ),
+        loader: () => fetch('/serviceCenters.json').then((res) => res.json()),
       },
 
       {
@@ -115,6 +117,10 @@ export const router = createBrowserRouter([
       {
         path: 'payment-cancelled',
         element: <p>payment-cancelled</p>,
+      },
+      {
+        path: 'approve-riders',
+        Component: ApproveRiders,
       },
       {
         path: 'settings',

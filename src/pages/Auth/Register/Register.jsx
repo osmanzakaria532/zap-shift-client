@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
 import { useForm } from 'react-hook-form';
 // import { FaArrowUp, FaUser } from 'react-icons/fa';
 import axios from 'axios';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import useAuth from '../../../hooks/useAuth';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import SocialLogin from '../SocialLogin/SocialLogin';
 
 const Register = () => {
@@ -17,15 +19,17 @@ const Register = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const axiosSecure = useAxiosSecure();
+
   const handleRegistration = (data) => {
-    console.log(data);
-    console.log('Photo:', data.photo[0]);
+    // console.log(data);
+    // console.log('Photo:', data.photo[0]);
     const profileImage = data.photo[0];
 
     registerUser(data.email, data.password)
       .then((result) => {
-        const user = result.user;
-        console.log(user);
+        // const user = result.user;
+        // console.log(user);
         // store photo ang get photo
         //
         const formData = new FormData();
@@ -39,12 +43,27 @@ const Register = () => {
           import.meta.env.VITE_IMAGE_HOSTING
         }`;
         axios.post(image_api_url, formData).then((res) => {
-          console.log('after upload image', res.data.data);
+          // console.log('after upload image', res.data.data);
+          const PhotoURL = res.data.data;
+
+          // create use in db
 
           // update user profile with name and photo url
+          const userInfo = {
+            email: data.email,
+            displayName: data.name,
+            photoURL: PhotoURL,
+          };
+
+          axiosSecure.post('/users', userInfo).then((res) => {
+            if (res.data.insertedId) {
+              console.log('user created in the database');
+            }
+          });
+
           const updateProfile = {
             displayName: data.name,
-            photoURL: res.data.data.display_url,
+            photoURL: PhotoURL,
           };
           updateUserProfile(updateProfile)
             .then(() => {

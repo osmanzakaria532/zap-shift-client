@@ -1,8 +1,9 @@
 import { BsBox } from 'react-icons/bs';
+import { FaHistory } from 'react-icons/fa';
 import { IoIosArrowDown, IoIosNotificationsOutline } from 'react-icons/io';
+import { MdElectricBike } from 'react-icons/md';
 import { Link, NavLink, Outlet } from 'react-router';
 import useAuth from '../hooks/useAuth';
-import { FaHistory } from 'react-icons/fa';
 
 const DashboardLayout = () => {
   const { user } = useAuth();
@@ -122,6 +123,22 @@ const DashboardLayout = () => {
               >
                 <FaHistory className="inline-block" />
                 <span className="is-drawer-close:hidden">Payment History</span>
+              </NavLink>
+            </li>
+
+            {/* Approve Riders */}
+            <li>
+              <NavLink
+                to="/dashboard/approve-riders"
+                className={({ isActive }) =>
+                  `${
+                    isActive ? 'text-black bg-primary' : 'text-black'
+                  } is-drawer-close:tooltip is-drawer-close:tooltip-right`
+                }
+                data-tip="Approve Riders"
+              >
+                <MdElectricBike className="inline-block" />
+                <span className="is-drawer-close:hidden">Approve Riders</span>
               </NavLink>
             </li>
 

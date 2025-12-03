@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { MdArrowOutward } from 'react-icons/md';
 import { Link, NavLink } from 'react-router';
 
 import { toast } from 'react-toastify';
@@ -111,7 +110,7 @@ const Navbar = () => {
 
   return (
     <div
-      className={`bg-base-100 shadow-sm sticky top-0 left-0 z-50 transition-all duration-300 ${
+      className={`bg-base-100 shadow-sm sticky top-0 left-0 z-50! transition-all duration-300 ${
         isSmall ? 'py-1' : 'py-2'
       }`}
     >
@@ -188,7 +187,7 @@ const Navbar = () => {
             </Link>
           )}
 
-          <a className="flex items-center gap-2">
+          {/* <a className="flex items-center gap-2">
             <span
               className={`btn rounded-md bg-primary transition-all duration-300 ${
                 isSmall ? 'px-3 py-1 text-sm' : 'px-5 py-2 text-base'
@@ -206,7 +205,7 @@ const Navbar = () => {
                 className={`transition-all duration-300 ${isSmall ? 'text-lg' : 'text-xl'}`}
               />
             </span>
-          </a>
+          </a> */}
         </div>
       </Container>
     </div>
