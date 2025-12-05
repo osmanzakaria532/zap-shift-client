@@ -18,6 +18,7 @@ import Rider from '../pages/Rider/Rider';
 import SendParcel from '../pages/SendParcel/SendParcel';
 import PrivateRoute from './PrivateRoute';
 import ApproveRiders from '../pages/Dashboard/ApproveRiders/ApproveRiders';
+import Users from '../pages/Dashboard/Users/Users';
 
 export const router = createBrowserRouter([
   {
@@ -121,6 +122,10 @@ export const router = createBrowserRouter([
       {
         path: 'approve-riders',
         Component: ApproveRiders,
+      },
+      {
+        path: 'users',
+        Component: Users,
       },
       {
         path: 'settings',

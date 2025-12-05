@@ -1,5 +1,5 @@
 import { BsBox } from 'react-icons/bs';
-import { FaHistory } from 'react-icons/fa';
+import { FaHistory, FaUsers } from 'react-icons/fa';
 import { IoIosArrowDown, IoIosNotificationsOutline } from 'react-icons/io';
 import { MdElectricBike } from 'react-icons/md';
 import { Link, NavLink, Outlet } from 'react-router';
@@ -139,6 +139,22 @@ const DashboardLayout = () => {
               >
                 <MdElectricBike className="inline-block" />
                 <span className="is-drawer-close:hidden">Approve Riders</span>
+              </NavLink>
+            </li>
+
+            {/* Users  */}
+            <li>
+              <NavLink
+                to="/dashboard/users"
+                className={({ isActive }) =>
+                  `${
+                    isActive ? 'text-black bg-primary' : 'text-black'
+                  } is-drawer-close:tooltip is-drawer-close:tooltip-right`
+                }
+                data-tip="Users "
+              >
+                <FaUsers className="inline-block" />
+                <span className="is-drawer-close:hidden">Users</span>
               </NavLink>
             </li>
 
