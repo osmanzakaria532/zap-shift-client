@@ -4,9 +4,14 @@ import { IoIosArrowDown, IoIosNotificationsOutline } from 'react-icons/io';
 import { MdElectricBike } from 'react-icons/md';
 import { Link, NavLink, Outlet } from 'react-router';
 import useAuth from '../hooks/useAuth';
+import useRole from '../hooks/useRole';
 
 const DashboardLayout = () => {
   const { user } = useAuth();
+  const { role } = useRole();
+
+  console.log('in the dashboard', role);
+
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -126,37 +131,41 @@ const DashboardLayout = () => {
               </NavLink>
             </li>
 
-            {/* Approve Riders */}
-            <li>
-              <NavLink
-                to="/dashboard/approve-riders"
-                className={({ isActive }) =>
-                  `${
-                    isActive ? 'text-black bg-primary' : 'text-black'
-                  } is-drawer-close:tooltip is-drawer-close:tooltip-right`
-                }
-                data-tip="Approve Riders"
-              >
-                <MdElectricBike className="inline-block" />
-                <span className="is-drawer-close:hidden">Approve Riders</span>
-              </NavLink>
-            </li>
+            {role === 'admin' && (
+              <>
+                {/* Approve Riders */}
+                <li>
+                  <NavLink
+                    to="/dashboard/approve-riders"
+                    className={({ isActive }) =>
+                      `${
+                        isActive ? 'text-black bg-primary' : 'text-black'
+                      } is-drawer-close:tooltip is-drawer-close:tooltip-right`
+                    }
+                    data-tip="Approve Riders"
+                  >
+                    <MdElectricBike className="inline-block" />
+                    <span className="is-drawer-close:hidden">Approve Riders</span>
+                  </NavLink>
+                </li>
 
-            {/* Users  */}
-            <li>
-              <NavLink
-                to="/dashboard/users"
-                className={({ isActive }) =>
-                  `${
-                    isActive ? 'text-black bg-primary' : 'text-black'
-                  } is-drawer-close:tooltip is-drawer-close:tooltip-right`
-                }
-                data-tip="Users "
-              >
-                <FaUsers className="inline-block" />
-                <span className="is-drawer-close:hidden">Users</span>
-              </NavLink>
-            </li>
+                {/* Users  */}
+                <li>
+                  <NavLink
+                    to="/dashboard/users"
+                    className={({ isActive }) =>
+                      `${
+                        isActive ? 'text-black bg-primary' : 'text-black'
+                      } is-drawer-close:tooltip is-drawer-close:tooltip-right`
+                    }
+                    data-tip="Users "
+                  >
+                    <FaUsers className="inline-block" />
+                    <span className="is-drawer-close:hidden">Users</span>
+                  </NavLink>
+                </li>
+              </>
+            )}
 
             {/* List item */}
             <li>

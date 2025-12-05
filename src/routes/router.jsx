@@ -7,18 +7,19 @@ import ForgotPassword from '../pages/Auth/ForgotPassword/ForgotPassword';
 import Login from '../pages/Auth/Login/Login';
 import Register from '../pages/Auth/Register/Register';
 import Coverage from '../pages/Coverage/Coverage';
+import ApproveRiders from '../pages/Dashboard/ApproveRiders/ApproveRiders';
 import MyParcels from '../pages/Dashboard/MyParcels/MyParcels';
 import Payment from '../pages/Dashboard/Payment/Payment';
 import PaymentHistory from '../pages/Dashboard/Payment/PaymentHistory/PaymentHistory';
 import PaymentSuccess from '../pages/Dashboard/Payment/PaymentSuccess/PaymentSuccess';
 import Settings from '../pages/Dashboard/Settings/Settings';
+import Users from '../pages/Dashboard/Users/Users';
 import Home from '../pages/Home/Home/Home';
 import NotFound from '../pages/NotFound/NotFound';
 import Rider from '../pages/Rider/Rider';
 import SendParcel from '../pages/SendParcel/SendParcel';
+import AdminRoute from './AdminRoute';
 import PrivateRoute from './PrivateRoute';
-import ApproveRiders from '../pages/Dashboard/ApproveRiders/ApproveRiders';
-import Users from '../pages/Dashboard/Users/Users';
 
 export const router = createBrowserRouter([
   {
@@ -121,11 +122,20 @@ export const router = createBrowserRouter([
       },
       {
         path: 'approve-riders',
-        Component: ApproveRiders,
+        element: (
+          <AdminRoute>
+            <ApproveRiders />
+          </AdminRoute>
+        ),
       },
       {
         path: 'users',
-        Component: Users,
+        element: (
+          <AdminRoute>
+            <Users />
+          </AdminRoute>
+        ),
+        // Component: Users,
       },
       {
         path: 'settings',
