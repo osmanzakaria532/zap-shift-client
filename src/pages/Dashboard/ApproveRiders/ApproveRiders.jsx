@@ -17,7 +17,7 @@ const ApproveRiders = () => {
 
   const updateRiderStatus = (rider, status) => {
     const updateInfo = { status: status, email: rider.email };
-    axiosSecure.patch(`/riders/${rider._id}`, updateInfo).then((res) => {
+    axiosSecure.patch(`/riders/${rider._id}/role`, updateInfo).then((res) => {
       if (res.data.modifiedCount) {
         console.log('Modified');
         refetch();
@@ -39,7 +39,7 @@ const ApproveRiders = () => {
 
   const handleRejection = (rider) => {
     console.log(rider);
-    updateRiderStatus(rider, 'reject');
+    updateRiderStatus(rider, 'rejected');
   };
   return (
     <div className="overflow-x-auto">
@@ -52,9 +52,11 @@ const ApproveRiders = () => {
             <th>Email</th>
             <th>NID</th>
             <th>Phone Number</th>
+            <th>District</th>
             <th>Driving License Number</th>
             <th>Bike Model</th>
-            <th>Status</th>
+            <th>Application Status</th>
+            <th>Work Status</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -66,6 +68,7 @@ const ApproveRiders = () => {
               <td>{rider.email}</td>
               <td>{rider.nid_number}</td>
               <td>{rider.phoneNumber}</td>
+              <td>{rider.riderDistrict}</td>
               <td>{rider.drivingLicenseNumber}</td>
               <td>{rider.bikeModel}</td>
               <td
@@ -75,6 +78,7 @@ const ApproveRiders = () => {
               >
                 {rider.status}
               </td>
+              <td>{rider.workStatus}</td>
               <td className="space-x-2.5">
                 <button onClick={() => handleApproval(rider)} className="btn btn-xs">
                   <FaUserCheck />

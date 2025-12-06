@@ -81,10 +81,10 @@ const Coverage = () => {
           We deliver almost all over Bangladesh
         </h3>
 
-        <div style={{ height: '500px', width: '100%' }}>
+        <div className="z-0" style={{ height: '600px', width: '100%' }}>
           <MapContainer
             center={position}
-            zoom={5}
+            zoom={8}
             scrollWheelZoom={false}
             style={{ height: '100%', width: '100%' }} // MUST
             ref={mapRef} // Attach ref to the MapContainer

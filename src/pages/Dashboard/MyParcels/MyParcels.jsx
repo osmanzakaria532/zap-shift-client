@@ -13,6 +13,7 @@ const MyParcels = () => {
   // useQuery to fetch parcels data
   const { data: parcels = [], refetch } = useQuery({
     //
+
     queryKey: ['myParcels', user?.email],
     // fetch function
     queryFn: async () => {
@@ -20,6 +21,7 @@ const MyParcels = () => {
       return res.data;
     },
   });
+  console.log('in my parcel ', parcels);
 
   // Handle delete parcel
   const handleParcelDelete = (parcelId) => {
@@ -79,6 +81,7 @@ const MyParcels = () => {
             <tr>
               <th>Number</th>
               <th>Name</th>
+              <th>Email</th>
               <th>Cost</th>
               <th>Type</th>
               <th>Weight</th>
@@ -92,6 +95,7 @@ const MyParcels = () => {
               <tr key={index}>
                 <th>{index + 1}</th>
                 <td>{parcel.parcelName}</td>
+                <td>{parcel.senderEmail}</td>
                 <td>{parcel.cost}</td>
                 <td>{parcel.parcelType}</td>
                 <td>{parcel.parcelWeight}</td>
@@ -113,7 +117,7 @@ const MyParcels = () => {
                     </>
                   )}
                 </td>
-                <td>Blue</td>
+                <td>{parcel?.deliveryStatus}</td>
 
                 <td className="space-x-2.5">
                   <button className="btn btn-sm btn-square hover:bg-primary">

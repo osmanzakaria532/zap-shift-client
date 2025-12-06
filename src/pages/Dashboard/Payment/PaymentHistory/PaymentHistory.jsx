@@ -68,8 +68,9 @@ const PaymentHistory = () => {
               <th>SL</th>
               <th>Parcel Info</th>
               <th>Recipient Info</th>
-              <th>Tracking Number</th>
-              <th>Payment Info</th>
+              <th>Amount</th>
+              <th>Transiction ID</th>
+              <th>Tracking ID</th>
               <th>Paid At</th>
               <th>Action</th>
             </tr>
@@ -80,8 +81,9 @@ const PaymentHistory = () => {
                 <th>{index + 1}</th>
                 <td>{payment.parcelName}</td>
                 <td>Quality Control Specialist</td>
-                <td>{payment?.trackingId?.slice(-8) || 'N/A'}</td>
                 <td>$ {payment.amount}</td>
+                <td>{payment?.transactionId || 'N/A'}</td>
+                <td>{payment?.trackingId?.slice(-8) || 'N/A'}</td>
                 <td>{payment.paidAt}</td>
                 <td className="space-x-2.5">
                   <button

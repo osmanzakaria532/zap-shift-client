@@ -45,3 +45,7 @@ body {
 .ul-style li > a.active {
   @apply text-primary font-semibold;
 }
+
+.modal-box {
+  max-width: 44rem;
+}

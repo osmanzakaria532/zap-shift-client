@@ -8,6 +8,7 @@ import Login from '../pages/Auth/Login/Login';
 import Register from '../pages/Auth/Register/Register';
 import Coverage from '../pages/Coverage/Coverage';
 import ApproveRiders from '../pages/Dashboard/ApproveRiders/ApproveRiders';
+import AssignRiders from '../pages/Dashboard/AssignRiders/AssignRiders';
 import MyParcels from '../pages/Dashboard/MyParcels/MyParcels';
 import Payment from '../pages/Dashboard/Payment/Payment';
 import PaymentHistory from '../pages/Dashboard/Payment/PaymentHistory/PaymentHistory';
@@ -125,6 +126,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ApproveRiders />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'assign-riders',
+        element: (
+          <AdminRoute>
+            <AssignRiders />
           </AdminRoute>
         ),
       },

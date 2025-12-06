@@ -1,7 +1,7 @@
 import { BsBox } from 'react-icons/bs';
 import { FaHistory, FaUsers } from 'react-icons/fa';
 import { IoIosArrowDown, IoIosNotificationsOutline } from 'react-icons/io';
-import { MdElectricBike } from 'react-icons/md';
+import { MdElectricBike, MdOutlineAssignment } from 'react-icons/md';
 import { Link, NavLink, Outlet } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import useRole from '../hooks/useRole';
@@ -99,6 +99,7 @@ const DashboardLayout = () => {
             </li>
 
             {/* Our Links hare */}
+
             {/* My Parcel */}
             <li>
               <NavLink
@@ -131,6 +132,7 @@ const DashboardLayout = () => {
               </NavLink>
             </li>
 
+            {/* admin route only */}
             {role === 'admin' && (
               <>
                 {/* Approve Riders */}
@@ -146,6 +148,22 @@ const DashboardLayout = () => {
                   >
                     <MdElectricBike className="inline-block" />
                     <span className="is-drawer-close:hidden">Approve Riders</span>
+                  </NavLink>
+                </li>
+
+                {/* Assign Riders */}
+                <li>
+                  <NavLink
+                    to="/dashboard/assign-riders"
+                    className={({ isActive }) =>
+                      `${
+                        isActive ? 'text-black bg-primary' : 'text-black'
+                      } is-drawer-close:tooltip is-drawer-close:tooltip-right`
+                    }
+                    data-tip="Assign Riders"
+                  >
+                    <MdOutlineAssignment className="inline-block" />
+                    <span className="is-drawer-close:hidden">Assign Riders</span>
                   </NavLink>
                 </li>
 
