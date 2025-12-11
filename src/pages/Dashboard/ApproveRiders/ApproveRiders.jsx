@@ -41,6 +41,31 @@ const ApproveRiders = () => {
     console.log(rider);
     updateRiderStatus(rider, 'rejected');
   };
+
+  const handleRemoveRider = (rider) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `Delete Rider: ${rider.name}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await axiosSecure.delete(`/riders/${rider._id}/delete`);
+
+          if (res.data.deletedCount > 0) {
+            Swal.fire('Deleted!', 'Rider has been removed.', 'success');
+            refetch(); // Refresh rider list
+          } else {
+            Swal.fire('Error', 'No rider found to delete.', 'error');
+          }
+        } catch (error) {
+          Swal.fire('Error', error.response?.data?.message || 'Failed to delete rider', 'error');
+        }
+      }
+    });
+  };
   return (
     <div className="overflow-x-auto">
       <table className="table table-zebra">
@@ -86,7 +111,7 @@ const ApproveRiders = () => {
                 <button onClick={() => handleRejection(rider)} className="btn btn-xs">
                   <IoPersonRemove />
                 </button>
-                <button className="btn btn-xs">
+                <button onClick={() => handleRemoveRider(rider)} className="btn btn-xs">
                   <FaRegTrashAlt />
                 </button>
               </td>

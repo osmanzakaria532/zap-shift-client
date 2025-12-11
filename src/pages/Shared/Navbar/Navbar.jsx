@@ -105,6 +105,17 @@ const Navbar = () => {
           Be a Rider
         </NavLink>
       </li>
+
+      {user && (
+        <li>
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) => (isActive ? 'text-blue-500' : 'text-black')}
+          >
+            Dashboard
+          </NavLink>
+        </li>
+      )}
     </>
   );
 

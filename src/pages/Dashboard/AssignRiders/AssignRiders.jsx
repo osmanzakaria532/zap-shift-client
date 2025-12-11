@@ -95,7 +95,7 @@ const AssignRiders = () => {
                     onClick={() => openAssignRiderModal(parcel)}
                     className="btn btn-xs bg-primary"
                   >
-                    Assgin Riders
+                    Finds
                   </button>
                 </td>
               </tr>

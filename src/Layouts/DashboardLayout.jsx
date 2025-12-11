@@ -1,7 +1,7 @@
 import { BsBox } from 'react-icons/bs';
 import { FaHistory, FaUsers } from 'react-icons/fa';
 import { IoIosArrowDown, IoIosNotificationsOutline } from 'react-icons/io';
-import { MdElectricBike, MdOutlineAssignment } from 'react-icons/md';
+import { MdDashboard, MdDeliveryDining, MdElectricBike, MdOutlineAssignment } from 'react-icons/md';
 import { Link, NavLink, Outlet } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import useRole from '../hooks/useRole';
@@ -10,7 +10,8 @@ const DashboardLayout = () => {
   const { user } = useAuth();
   const { role } = useRole();
 
-  console.log('in the dashboard', role);
+  // console.log('in the dashboard', role);
+  console.log(user);
 
   return (
     <div className="drawer lg:drawer-open">
@@ -18,6 +19,7 @@ const DashboardLayout = () => {
       <div className="drawer-content">
         {/* Navbar */}
         <nav className="navbar w-full justify-between bg-white">
+          {/* Sidebar icon */}
           <label
             htmlFor="my-drawer-4"
             aria-label="open sidebar"
@@ -39,23 +41,33 @@ const DashboardLayout = () => {
               <path d="M14 10l2 2l-2 2"></path>
             </svg>
           </label>
+          <p>
+            {user?.email} : <span className="capitalize">{role}</span>
+          </p>
+
+          {/* Right Side */}
           <div className="px-4 flex items-center gap-3">
             <div className="border w-10 h-10 rounded-full flex items-center justify-center">
               <IoIosNotificationsOutline className="text-3xl" />
             </div>
-            <div className="border w-10 h-10 rounded-full flex items-center justify-center">
+            <div className="border w-10 h-10 rounded-full flex items-center justify-center outline-hidden">
               {user?.photoURL && (
-                <img src={user.photoURL} alt="User Avatar" className=" rounded-full" />
+                <img
+                  src={user.photoURL}
+                  alt="User Avatar"
+                  className="w-10 h-10 rounded-full object-cover"
+                />
               )}
             </div>
             <div>
-              <h2>
+              {/* <h2>
                 {user?.displayName
                   ? user.displayName.split(' ').slice(0, 2).join(' ') +
                     (user.displayName.split(' ').length > 2 ? ' ...' : '')
                   : 'User Name'}
-              </h2>
-              <h6>customer</h6>
+              </h2> */}
+              <h2>{user?.displayName ? user?.displayName : 'User Name'}</h2>
+              <h6>{role}</h6>
             </div>
             <div>
               <IoIosArrowDown />
@@ -70,7 +82,7 @@ const DashboardLayout = () => {
 
       <div className="drawer-side is-drawer-close:overflow-visible">
         <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
-        <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
+        <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-44">
           {/* Sidebar content here */}
           <ul className="menu w-full grow">
             {/* List item */}
@@ -99,6 +111,40 @@ const DashboardLayout = () => {
             </li>
 
             {/* Our Links hare */}
+
+            {/* Dash */}
+            <li>
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) =>
+                  `${
+                    isActive ? 'text-black bg-primary' : 'text-black'
+                  } is-drawer-close:tooltip is-drawer-close:tooltip-right`
+                }
+                data-tip="DashBoard"
+              >
+                <MdDashboard className="inline-block" />
+                <span className="is-drawer-close:hidden">DashBoard</span>
+              </NavLink>
+            </li>
+
+            {/* All parcels */}
+            {role === 'admin' && (
+              <li>
+                <NavLink
+                  to="/dashboard/all-parcels"
+                  className={({ isActive }) =>
+                    `${
+                      isActive ? 'text-black bg-primary' : 'text-black'
+                    } is-drawer-close:tooltip is-drawer-close:tooltip-right`
+                  }
+                  data-tip="All Parcels"
+                >
+                  <BsBox className="inline-block" />
+                  <span className="is-drawer-close:hidden">All Parcels</span>
+                </NavLink>
+              </li>
+            )}
 
             {/* My Parcel */}
             <li>
@@ -180,6 +226,26 @@ const DashboardLayout = () => {
                   >
                     <FaUsers className="inline-block" />
                     <span className="is-drawer-close:hidden">Users</span>
+                  </NavLink>
+                </li>
+              </>
+            )}
+
+            {/* Rider Route */}
+            {role === 'rider' && (
+              <>
+                <li>
+                  <NavLink
+                    to="/dashboard/assigned-delivereis"
+                    className={({ isActive }) =>
+                      `${
+                        isActive ? 'text-black bg-primary' : 'text-black'
+                      } is-drawer-close:tooltip is-drawer-close:tooltip-right`
+                    }
+                    data-tip="Assigned Delivereis"
+                  >
+                    <MdDeliveryDining className="inline-block" />
+                    <span className="is-drawer-close:hidden">Assigned Delivereis</span>
                   </NavLink>
                 </li>
               </>

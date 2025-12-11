@@ -21,7 +21,7 @@ const MyParcels = () => {
       return res.data;
     },
   });
-  console.log('in my parcel ', parcels);
+  // console.log('in my parcel ', parcels);
 
   // Handle delete parcel
   const handleParcelDelete = (parcelId) => {

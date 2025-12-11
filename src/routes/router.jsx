@@ -7,8 +7,11 @@ import ForgotPassword from '../pages/Auth/ForgotPassword/ForgotPassword';
 import Login from '../pages/Auth/Login/Login';
 import Register from '../pages/Auth/Register/Register';
 import Coverage from '../pages/Coverage/Coverage';
+import AassignedDelivereis from '../pages/Dashboard/AassignedDelivereis/AassignedDelivereis';
+import AllParcels from '../pages/Dashboard/AllParcels/AllParcels';
 import ApproveRiders from '../pages/Dashboard/ApproveRiders/ApproveRiders';
 import AssignRiders from '../pages/Dashboard/AssignRiders/AssignRiders';
+import Dashboard from '../pages/Dashboard/Dashboard';
 import MyParcels from '../pages/Dashboard/MyParcels/MyParcels';
 import Payment from '../pages/Dashboard/Payment/Payment';
 import PaymentHistory from '../pages/Dashboard/Payment/PaymentHistory/PaymentHistory';
@@ -21,6 +24,7 @@ import Rider from '../pages/Rider/Rider';
 import SendParcel from '../pages/SendParcel/SendParcel';
 import AdminRoute from './AdminRoute';
 import PrivateRoute from './PrivateRoute';
+import RiderRoute from './RiderRoute';
 
 export const router = createBrowserRouter([
   {
@@ -82,6 +86,7 @@ export const router = createBrowserRouter([
       {
         path: 'register',
         Component: Register,
+        loader: () => fetch('/serviceCenters.json').then((res) => res.json()),
       },
       {
         path: 'login',
@@ -93,6 +98,9 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  // {
+  //   path: 'dashboard',
+  // },
   {
     path: 'dashboard',
     element: (
@@ -101,6 +109,14 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      {
+        path: '',
+        element: <Dashboard />,
+      },
+      {
+        path: 'all-parcels',
+        Component: AllParcels,
+      },
       {
         path: 'my-parcels',
         Component: MyParcels,
@@ -121,6 +137,8 @@ export const router = createBrowserRouter([
         path: 'payment-cancelled',
         element: <p>payment-cancelled</p>,
       },
+
+      // Admin Routes
       {
         path: 'approve-riders',
         element: (
@@ -145,6 +163,16 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
         // Component: Users,
+      },
+
+      // Rider Routes
+      {
+        path: 'assigned-delivereis',
+        element: (
+          <RiderRoute>
+            <AassignedDelivereis />
+          </RiderRoute>
+        ),
       },
       {
         path: 'settings',

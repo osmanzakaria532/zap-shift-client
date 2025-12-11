@@ -227,9 +227,9 @@ const SendParcel = () => {
                     {...register('senderDistrict')}
                   >
                     <option disabled={true}>Select Your Districts</option>
-                    {districtsByRegion(senderRegion).map((region, index) => (
-                      <option value={region} key={index}>
-                        {region}
+                    {districtsByRegion(senderRegion).map((district, index) => (
+                      <option defaultValue={district?.region} value={district} key={index}>
+                        {district}
                       </option>
                     ))}
                   </select>

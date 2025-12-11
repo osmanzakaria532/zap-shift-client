@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 // import { FaArrowUp, FaUser } from 'react-icons/fa';
 import axios from 'axios';
-import { Link, useLocation, useNavigate } from 'react-router';
+import { Link, useLoaderData, useLocation, useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
@@ -14,6 +14,7 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    control,
   } = useForm();
   const { registerUser, updateUserProfile } = useAuth();
   const location = useLocation();
@@ -21,10 +22,29 @@ const Register = () => {
 
   const axiosSecure = useAxiosSecure();
 
+  // dynamic Region And districts
+  const serviceCenters = useLoaderData();
+  const regionsDuplicate = serviceCenters.map((center) => center.region);
+  // get unique regions
+  const regions = [...new Set(regionsDuplicate)];
+
+  // watch senderRegion and receiverRegion fields
+  const region = useWatch({ control, name: 'region' });
+
+  // function to get districts by region
+  const districtsByRegion = (region) => {
+    // filter service centers by region
+    const filteredRegion = serviceCenters.filter((center) => center.region === region);
+    // map to get districts
+    const districts = filteredRegion.map((dct) => dct.district);
+    return districts;
+  };
+
   const handleRegistration = (data) => {
     // console.log(data);
     // console.log('Photo:', data.photo[0]);
     const profileImage = data.photo[0];
+    console.log(profileImage);
 
     registerUser(data.email, data.password)
       .then((result) => {
@@ -44,7 +64,8 @@ const Register = () => {
         }`;
         axios.post(image_api_url, formData).then((res) => {
           // console.log('after upload image', res.data.data);
-          const PhotoURL = res.data.data;
+          const PhotoURL = res.data.data.url;
+          console.log(PhotoURL);
 
           // create use in db
 
@@ -53,6 +74,8 @@ const Register = () => {
             email: data.email,
             displayName: data.name,
             photoURL: PhotoURL,
+            region: data.region,
+            district: data.district,
           };
 
           axiosSecure.post('/users', userInfo).then((res) => {
@@ -65,6 +88,8 @@ const Register = () => {
             displayName: data.name,
             photoURL: PhotoURL,
           };
+          console.log(updateProfile);
+
           updateUserProfile(updateProfile)
             .then(() => {
               console.log('User profile updated');
@@ -98,7 +123,7 @@ const Register = () => {
       <form onSubmit={handleSubmit(handleRegistration)} className="w-[385px]">
         <fieldset className="fieldset">
           {/* name field */}
-          <label className="label">Name</label>
+          <label className="label">Your Name is</label>
           <input
             type="text"
             className="input w-full"
@@ -108,6 +133,42 @@ const Register = () => {
           {errors.name?.type === 'required' && (
             <span className="text-red-500">Name is required</span>
           )}
+        </fieldset>
+        <fieldset className="fieldset flex">
+          {/* Resion And District */}
+          <div className="w-1/2">
+            <legend className="fieldset-legend">Your Region is</legend>
+            <select
+              defaultValue="Select Your Region"
+              className="select appearance-none  w-full"
+              {...register('region')}
+            >
+              <option disabled={true}>Select Your Region</option>
+              {regions.map((region, index) => (
+                <option value={region} key={index}>
+                  {region}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="w-1/2">
+            <legend className="fieldset-legend">Your Dristrict is</legend>
+            <select
+              defaultValue="Select Your Districts"
+              className="select appearance-none  w-full"
+              {...register('district')}
+              disabled={!region}
+            >
+              <option disabled={true}>Select Your Districts</option>
+              {districtsByRegion(region)?.map((district, index) => (
+                <option value={district} key={index}>
+                  {district}
+                </option>
+              ))}
+            </select>
+          </div>
+        </fieldset>
+        <fieldset className="fieldset">
           {/* /email field */}
           <label className="label">Photo</label>
           <input
@@ -131,6 +192,8 @@ const Register = () => {
           {errors.email?.type === 'required' && (
             <span className="text-red-500">Email is required</span>
           )}
+        </fieldset>
+        <fieldset className="fieldset">
           {/* password field */}
           <label className="label">Password</label>
           <input
