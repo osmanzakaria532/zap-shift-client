@@ -5,22 +5,25 @@ import { MdDeleteSweep } from 'react-icons/md';
 import Swal from 'sweetalert2';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import useRole from '../../../hooks/useRole';
 
 const MyParcels = () => {
+  const { role } = useRole();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
   // useQuery to fetch parcels data
   const { data: parcels = [], refetch } = useQuery({
-    //
-
-    queryKey: ['myParcels', user?.email],
-    // fetch function
+    queryKey: ['myParcels', user?.email, role],
+    enabled: !!user?.email && !!role, // role & email available na thakle fetch hobe na
     queryFn: async () => {
-      const res = await axiosSecure.get(`/parcels?email=${user?.email}`);
+      if (!user?.email || !role) return [];
+
+      const res = await axiosSecure.get(`/parcels?email=${user?.email}&role=${role}`);
       return res.data;
     },
   });
+
   // console.log('in my parcel ', parcels);
 
   // Handle delete parcel

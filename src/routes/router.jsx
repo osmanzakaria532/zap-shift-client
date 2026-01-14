@@ -9,6 +9,7 @@ import Register from '../pages/Auth/Register/Register';
 import Coverage from '../pages/Coverage/Coverage';
 import AassignedDelivereis from '../pages/Dashboard/AassignedDelivereis/AassignedDelivereis';
 import AllParcels from '../pages/Dashboard/AllParcels/AllParcels';
+import AllRiders from '../pages/Dashboard/AllRiders/AllRiders';
 import ApproveRiders from '../pages/Dashboard/ApproveRiders/ApproveRiders';
 import AssignRiders from '../pages/Dashboard/AssignRiders/AssignRiders';
 import Dashboard from '../pages/Dashboard/Dashboard';
@@ -152,6 +153,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <AssignRiders />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'all-riders',
+        element: (
+          <AdminRoute>
+            <AllRiders />
           </AdminRoute>
         ),
       },

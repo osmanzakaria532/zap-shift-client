@@ -21,7 +21,7 @@ const Users = () => {
       return res.data;
     },
   });
-  console.log(users);
+  // console.log(users);
 
   const handleMakeAdmin = (user) => {
     const roleInfo = { role: 'admin' };

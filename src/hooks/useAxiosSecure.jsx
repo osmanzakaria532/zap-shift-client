@@ -4,19 +4,24 @@ import { useNavigate } from 'react-router';
 import useAuth from './useAuth';
 
 const axiosSecure = axios.create({
-  // baseURL: 'http://localhost:5000',
-  baseURL: 'https://zap-shift-server-osmanzakaria.vercel.app/',
+  baseURL: 'http://localhost:5000',
+  // baseURL: 'https://zap-shift-server-osmanzakaria.vercel.app/',
 });
 
 const useAxiosSecure = () => {
   const { user, logOut } = useAuth();
   const navigate = useNavigate();
 
+  console.log(user); // check user object
+  // console.log(user?.accessToken);
+
   // protect api
   useEffect(() => {
     const reqInterceptor = axiosSecure.interceptors.request.use((config) => {
       // send firebase token for store in backend
-      config.headers.Authorization = `Bearer ${user?.accessToken}`;
+      if (user?.accessToken) {
+        config.headers.Authorization = `Bearer ${user.accessToken}`;
+      }
       return config;
     });
 
@@ -29,7 +34,7 @@ const useAxiosSecure = () => {
         console.log(error);
 
         // return to login page  wh=hen unauthorizes or forbidden access
-        const statusCode = error.status;
+        const statusCode = error.response?.status;
         if (statusCode === 401 || statusCode === 403) {
           logOut().then(() => {
             navigate('/login');

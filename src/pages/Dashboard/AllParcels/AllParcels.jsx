@@ -27,13 +27,17 @@ const AllParcels = () => {
           {/* head */}
           <thead>
             <tr>
-              <th>Number</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Cost</th>
-              <th>Type</th>
+              <th>SL</th>
+              <th>Parcel Name</th>
+              <th>Sender Email</th>
+              <th>Sender Region</th>
+              <th>Sender District</th>
+              <th>Receiver Region</th>
+              <th>Receiver District</th>
+              <th>Parcel Type</th>
               <th>Weight</th>
-              <th>Payment</th>
+              <th>Total Cost</th>
+              <th>Payment Status</th>
               <th>Delivary Status</th>
               <th>Action</th>
             </tr>
@@ -44,9 +48,14 @@ const AllParcels = () => {
                 <th>{index + 1}</th>
                 <td>{parcel.parcelName}</td>
                 <td>{parcel.senderEmail}</td>
-                <td>{parcel.cost}</td>
+                <td>{parcel.senderRegion}</td>
+                <td>{parcel.senderDistrict}</td>
+                <td>{parcel.receiverRegion}</td>
+                <td>{parcel.receiverDistrict}</td>
                 <td>{parcel.parcelType}</td>
                 <td>{parcel.parcelWeight}</td>
+                <td>{parcel.cost}</td>
+
                 <td>
                   {parcel.paymentStatus === 'paid' ? (
                     <p className="bg-primary-content inline-block px-2 py-1 rounded font-medium">
@@ -61,6 +70,7 @@ const AllParcels = () => {
                   )}
                 </td>
                 <td>{parcel?.deliveryStatus}</td>
+                <td></td>
               </tr>
             ))}
           </tbody>

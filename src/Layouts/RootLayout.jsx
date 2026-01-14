@@ -7,6 +7,8 @@ import Navbar from '../pages/Shared/Navbar/Navbar';
 const RootLayout = () => {
   const { user } = useAuth();
 
+  // console.log({ user });
+
   return (
     <div className="">
       <Navbar />

@@ -14,9 +14,14 @@ const ApproveRiders = () => {
       return res.data;
     },
   });
+  console.log(riders);
 
   const updateRiderStatus = (rider, status) => {
-    const updateInfo = { status: status, email: rider.email };
+    const updateInfo = {
+      status: status,
+      email: rider.email,
+      workStatus: status === 'approved' ? 'available' : 'unavailable',
+    };
     axiosSecure.patch(`/riders/${rider._id}/role`, updateInfo).then((res) => {
       if (res.data.modifiedCount) {
         console.log('Modified');
@@ -77,7 +82,8 @@ const ApproveRiders = () => {
             <th>Email</th>
             <th>NID</th>
             <th>Phone Number</th>
-            <th>District</th>
+            <th>Rider Region</th>
+            <th>Rider District</th>
             <th>Driving License Number</th>
             <th>Bike Model</th>
             <th>Application Status</th>
@@ -93,6 +99,7 @@ const ApproveRiders = () => {
               <td>{rider.email}</td>
               <td>{rider.nid_number}</td>
               <td>{rider.phoneNumber}</td>
+              <td>{rider.riderRegion}</td>
               <td>{rider.riderDistrict}</td>
               <td>{rider.drivingLicenseNumber}</td>
               <td>{rider.bikeModel}</td>
