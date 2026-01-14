@@ -7,11 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "user": "vite --port=5173",
-    "rider": "vite --port=5174",
-    "admin": "vite --port=5175",
-    "multi": "concurrently \"npm run user\" \"npm run rider\" \"npm run admin\""
+    "preview": "vite preview"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
