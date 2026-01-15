@@ -24,8 +24,8 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className=" bg-base-100 shadow-sm">
-      <Container>
+    <div className="bg-base-100 shadow-sm sticky top-0 z-50">
+      <Container className="px-2 md:px-0">
         <div className="navbar px-0">
           <div className="navbar-start">
             <div className="dropdown">
@@ -60,7 +60,7 @@ const Navbar = () => {
           </div>
           <div className="navbar-end">
             <Link to="/sign-in" className="flex">
-              <span className="border border-[#DADADA] bg-[#caeb66] rounded-lg px-4 py-1.5 ">
+              <span className="border border-[#DADADA] bg-[#caeb66] rounded-lg px-2 md:px-4 py-1 md:py-1.5 text-sm md:text-base">
                 Sign in
               </span>
               <span className="rounded-full w-10 h-10 bg-[#03464D] md:flex items-center justify-center ms-1 hidden">

@@ -18,11 +18,26 @@
 
 body {
   font-family: 'Urbanist', sans-serif;
+  background-color: #eaeced;
 }
 
 /* Navbar Css */
 .ul-style li > a.active {
   @apply text-primary font-semibold;
+}
+
+/* Banner > Css */
+
+/* Default: show */
+.carousel .thumbs-wrapper {
+  display: block;
+}
+
+/* Small device (mobile) এ hide */
+@media (max-width: 640px) {
+  .carousel .thumbs-wrapper {
+    display: none;
+  }
 }
 
 /* About us -> Css */
