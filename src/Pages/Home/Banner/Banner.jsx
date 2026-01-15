@@ -30,23 +30,23 @@ const Banner = () => {
   );
   return (
     <div className="py-5 md:py-10">
-      <Container>
+      <Container className="px-2 xl:px-0">
         <Carousel autoPlay={true} infiniteLoop={true}>
           <div className="relative">
             <img src={bannerImg1} />
-            <div className="space-x-2.5 absolute left-2 md:left-10 lg:left-20 bottom-2 md:bottom-6 lg:bottom-20 z-50 flex items-center">
+            <div className="space-x-2.5 absolute left-5.5 md:left-10 lg:left-20 bottom-1.5 md:bottom-6 lg:bottom-20 z-50 flex items-center">
               {bannerBtn}
             </div>
           </div>
           <div className="relative">
             <img src={bannerImg2} />
-            <div className="space-x-2.5 absolute left-2 md:left-10 lg:left-20 bottom-2 md:bottom-6 lg:bottom-20 z-50 flex items-center">
+            <div className="space-x-2.5 absolute left-5.5 md:left-10 lg:left-20 bottom-1.5 md:bottom-6 lg:bottom-20 z-50 flex items-center">
               {bannerBtn}
             </div>
           </div>
           <div className="relative">
             <img src={bannerImg3} />
-            <div className="space-x-2.5 absolute left-2 md:left-10 lg:left-20 bottom-2 md:bottom-6 lg:bottom-20 z-50 flex items-center">
+            <div className="space-x-2.5 absolute left-5.5 md:left-10 lg:left-20 bottom-1.5 md:bottom-6 lg:bottom-20 z-50 flex items-center">
               {bannerBtn}
             </div>
           </div>
