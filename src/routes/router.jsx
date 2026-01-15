@@ -14,6 +14,10 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: '/sign-in',
+    element: <p>Sign In</p>,
+  },
 ]);
 
 export default router;

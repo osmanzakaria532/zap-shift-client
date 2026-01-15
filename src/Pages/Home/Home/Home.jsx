@@ -1,13 +1,7 @@
-import Container from '../../../Components/Container';
+import Banner from '../Banner/Banner';
 
 const Home = () => {
-  return (
-    <div className="py-8">
-      <Container>
-        <h2>Home Page</h2>
-      </Container>
-    </div>
-  );
+  return <Banner />;
 };
 
 export default Home;

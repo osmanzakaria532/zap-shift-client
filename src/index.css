@@ -3,6 +3,9 @@
 @import 'tailwindcss';
 @plugin "daisyui" {
   themes: light --default;
+}
+
+@plugin 'daisyui/theme' {
   name: 'light';
   default: true;
   --color-primary: #caeb66;
@@ -15,4 +18,33 @@
 
 body {
   font-family: 'Urbanist', sans-serif;
+}
+
+/* Navbar Css */
+.ul-style li > a.active {
+  @apply text-primary font-semibold;
+}
+
+/* About us -> Css */
+
+.react-tabs__tab {
+  /* padding-right: 12px !important; */
+  padding-left: 0 !important;
+  font-size: 24px;
+  font-weight: 300;
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.react-tabs__tab-list {
+  border-bottom: none !important;
+  margin-bottom: 26px;
+}
+
+.react-tabs__tab--selected {
+  border: none !important;
+}
+
+/*  */
+.modal-box {
+  max-width: 44rem;
 }
