@@ -1,4 +1,5 @@
 import 'leaflet/dist/leaflet.css';
+import { useRef } from 'react';
 import { IoIosSearch } from 'react-icons/io';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import { useLoaderData } from 'react-router';
@@ -6,9 +7,23 @@ import Container from '../../Components/Container';
 
 const Coverage = () => {
   const position = [23.685, 90.3563];
-
   const serviceCenters = useLoaderData();
-  console.log(serviceCenters);
+  //   console.log(serviceCenters);
+
+  const mapRef = useRef(null);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const location = e.target.location.value;
+    const district = serviceCenters.find((center) =>
+      center.district.toLowerCase().includes(location.toLowerCase()),
+    );
+    if (district) {
+      const coordinate = [district.latitude, district.longitude];
+      console.log(district, coordinate);
+      mapRef.current.flyTo(coordinate, 14);
+    }
+  };
 
   return (
     <div className="pt-4 md:pt-8 pb-16 md:pb-31">
@@ -18,7 +33,7 @@ const Coverage = () => {
             We are available in 64 districts
           </h2>
           <div className="flex justify-center lg:justify-start">
-            <form className="my-6.5 md:my-12.5 px-2 md:px-0 w-142.5">
+            <form onSubmit={handleSearch} className="my-6.5 md:my-12.5 px-2 md:px-0 w-142.5">
               <div className="max-w-142.5 border-transparent relative rounded-full">
                 <IoIosSearch className="md:text-xl absolute left-3 top-1/2 transform -translate-y-1/2" />
                 <input
@@ -29,7 +44,7 @@ const Coverage = () => {
                   name="location"
                 />
                 <button
-                  type="button"
+                  type="submit"
                   className="lg:btn bg-primary md:text-xl font-semibold border-0 shadow-none absolute right-0 rounded-full py-1 md:py-1.5 px-5 md:px-5"
                 >
                   Search
@@ -52,6 +67,7 @@ const Coverage = () => {
             zoom={8}
             scrollWheelZoom={false}
             className="h-full w-full"
+            ref={mapRef}
           >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -59,7 +75,18 @@ const Coverage = () => {
             />
 
             {serviceCenters.map((center, index) => (
-              <Marker position={[center.latitude, center.longitude]} key={index}>
+              <Marker
+                position={[center.latitude, center.longitude]}
+                key={index}
+                eventHandlers={{
+                  mouseover: (e) => {
+                    e.target.openPopup(); // Open popup on hover
+                  },
+                  mouseout: (e) => {
+                    e.target.closePopup(); // Close popup when mouse leaves
+                  },
+                }}
+              >
                 <Popup>
                   <strong>{center.district}</strong>
                   <br />
