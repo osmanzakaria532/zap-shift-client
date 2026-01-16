@@ -11,7 +11,7 @@ import Container from '../../../Components/Container';
 const Banner = () => {
   const bannerBtn = (
     <>
-      <Link className="flex items-center group gap-0.5">
+      <Link to="/track-your-parcel" className="flex items-center group gap-0.5">
         <span className="md:btn px-2 py-1 border border-secondary-content rounded-md group-hover:rounded-full transform duration-150 bg-primary hover:bg-primary-dark group-hover:shadow-lg text-xs md:text-base">
           <span className="hidden md:inline">Track Your Parcel</span>
           <span className="inline md:hidden">Tracking Parcel</span>
@@ -22,7 +22,7 @@ const Banner = () => {
       </Link>
       <Link
         to="/rider"
-        className="btn rounded-md hover:rounded-full bg-white text-xs md:text-base hidden"
+        className="btn rounded-md hover:rounded-full bg-white text-xs md:text-base hidden md:block py-1.5"
       >
         Be A Rider
       </Link>
@@ -32,6 +32,7 @@ const Banner = () => {
     <div className="py-5 md:py-10">
       <Container className="px-2 xl:px-0">
         <Carousel autoPlay={true} infiniteLoop={true}>
+          {/*  */}
           <div className="relative">
             <img src={bannerImg1} />
             <div className="space-x-2.5 absolute left-5.5 md:left-10 lg:left-20 bottom-1.5 md:bottom-6 lg:bottom-20 z-50 flex items-center">

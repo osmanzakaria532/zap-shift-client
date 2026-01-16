@@ -1,6 +1,7 @@
 import Banner from '../Banner/Banner';
 import Brands from '../brands/brands';
 import CustomerSatisfaction from '../CustomerSatisfaction/CustomerSatisfaction';
+import FAQ from '../FAQ/FAQ';
 import Reviews from '../Reviews/Reviews';
 import Services from '../Services/Services';
 import TDS from '../TDS/TDS';
@@ -19,6 +20,7 @@ const Home = () => {
       <TDS />
       <CustomerSatisfaction />
       <Reviews reviewsPromise={reviewsPromise} />
+      <FAQ />
     </>
   );
 };

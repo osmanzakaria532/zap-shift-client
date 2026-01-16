@@ -18,39 +18,55 @@ const Reviews = ({ reviewsPromise }) => {
   // }, []);
 
   return (
-    <div className="lg:pt-24">
+    <div className="py-6 lg:py-14 px-2 lg:px-0">
       <Container>
         <div className="flex flex-col gap-3.5 justify-center items-center max-w-200 mx-auto text-center mb-10">
           <div className="">
-            <img src={cusmTop} alt="" />
+            <img src={cusmTop} alt="" className="w-40 md:w-auto" />
           </div>
-          <h2 className="text-4xl font-extrabold text-secondary">What our customers are sayings</h2>
-          <p className="text-info leading-6">
+          <h2 className="md:text-4xl font-extrabold text-secondary">
+            What our customers are sayings
+          </h2>
+          <p className="text-info md:leading-6 text-sm md:text-base">
             Enhance posture, mobility, and well-being effortlessly with Posture Pro. Achieve proper
             alignment, reduce pain, and strengthen your body with ease!
           </p>
         </div>
         <Swiper
-          // loop={true}
-          spaceBetween={30}
           grabCursor={true}
           centeredSlides={true}
-          slidesPerView={3}
-          effect={'coverflow'}
+          pagination={true}
+          autoplay={{
+            delay: 2000,
+            disableOnInteraction: false,
+          }}
+          effect="coverflow"
+          modules={[EffectCoverflow, Pagination, Autoplay]}
           coverflowEffect={{
             rotate: 30,
-            stretch: '50%',
+            stretch: 0,
             depth: 200,
             modifier: 1,
             scale: 0.75,
             slideShadows: true,
           }}
-          pagination={true}
-          modules={[EffectCoverflow, Pagination, Autoplay]}
-          // autoplay={{
-          //   delay: 2000,
-          //   disableOnInteraction: false,
-          // }}
+          breakpoints={{
+            // Mobile
+            0: {
+              slidesPerView: 1,
+              spaceBetween: 10,
+            },
+            // Tablet
+            640: {
+              slidesPerView: 1.5,
+              spaceBetween: 20,
+            },
+            // Desktop
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: 30,
+            },
+          }}
           className="mySwiper"
         >
           {reviews.map((review) => (
