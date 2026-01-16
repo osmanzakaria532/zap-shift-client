@@ -2,7 +2,7 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 import { MdArrowOutward } from 'react-icons/md';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import bannerImg1 from '../../../../src/assets/banner/banner1.png';
 import bannerImg2 from '../../../../src/assets/banner/banner2.png';
 import bannerImg3 from '../../../../src/assets/banner/banner3.png';

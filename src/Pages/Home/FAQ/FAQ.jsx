@@ -5,6 +5,8 @@ import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
+import { MdArrowOutward } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
 const FAQ = () => {
   const [expanded, setExpanded] = useState(false);
@@ -14,7 +16,7 @@ const FAQ = () => {
   };
 
   return (
-    <div className="pt-6 md:pt-14 px-2 lg:px-0">
+    <div className="pt-6 md:pt-14 px-2 lg:px-0 mb-24">
       <div className="flex flex-col gap-3.5 justify-center items-center max-w-200 mx-auto text-center mb-10">
         <h2 className="md:text-4xl font-extrabold text-secondary">
           Frequently Asked Question (FAQ)
@@ -104,6 +106,16 @@ const FAQ = () => {
             </Typography>
           </AccordionDetails>
         </Accordion>
+      </div>
+      <div className="flex justify-center items-center mt-10">
+        <Link to="#" className="flex items-center gap-0.5 ">
+          <span className="btn border border-secondary-content rounded-md hover:rounded-full transform duration-150 bg-primary hover:bg-primary-dark hover:shadow-lg text-xs md:text-base">
+            See More FAQ’s
+          </span>
+          <span className="bg-secondary-content w-10 h-10 rounded-full flex justify-center items-center hover:shadow-lg">
+            <MdArrowOutward className="text-xl text-primary" />
+          </span>
+        </Link>
       </div>
     </div>
   );

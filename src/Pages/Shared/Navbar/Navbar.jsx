@@ -1,5 +1,5 @@
 import { MdArrowOutward } from 'react-icons/md';
-import { Link, NavLink } from 'react-router';
+import { Link, NavLink } from 'react-router-dom';
 import Container from '../../../Components/Container';
 import Logo from '../../../Components/Logo/Logo';
 
@@ -10,7 +10,7 @@ const Navbar = () => {
         <NavLink>Services</NavLink>
       </li>
       <li>
-        <NavLink>Coverage</NavLink>
+        <NavLink to="/coverage-area">Coverage</NavLink>
       </li>
       <li>
         <NavLink>About Us</NavLink>
@@ -24,7 +24,7 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className="bg-base-100 shadow-sm sticky top-0 z-50">
+    <div className="bg-base-100 shadow-sm sticky top-0 z-9999">
       <Container className="px-2 xl:px-0">
         <div className="navbar px-0">
           <div className="navbar-start">

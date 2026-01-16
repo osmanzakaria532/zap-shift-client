@@ -1,6 +1,6 @@
 import { FaFacebookF, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import Container from '../../../Components/Container';
 import Logo from '../../../Components/Logo/Logo';
 
