@@ -40,6 +40,10 @@ body {
   }
 }
 
+.swiper-slide {
+  display: none;
+}
+
 /* About us -> Css */
 
 .react-tabs__tab {
