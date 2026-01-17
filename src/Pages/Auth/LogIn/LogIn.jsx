@@ -3,7 +3,7 @@ import SocialLogin from '../SocialLogin/SocialLogin';
 
 const LogIn = () => {
   return (
-    <div className="py-10 px-2 md:px-0 h-screen w-full flex justify-center items-center">
+    <div className="py-10 px-2 xl:px-0 h-screen w-full flex justify-center items-center">
       <div className="w-full">
         <div className="text-center md:text-left mb-4 md:mb-0">
           <h2 className="text-[22px] md:text-[42px] font-extrabold">Welcome Back</h2>
