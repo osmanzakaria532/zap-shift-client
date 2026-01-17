@@ -1,5 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
+import AuthLayout from '../layouts/AuthLayout';
 import RootLayout from '../layouts/RootLayout';
+import ForgotPassword from '../Pages/Auth/ForgotPassword/ForgotPassword';
+import LogIn from '../Pages/Auth/LogIn/LogIn';
+import Register from '../Pages/Auth/Register/Register';
 import Coverage from '../Pages/Coverage/Coverage';
 import Home from '../Pages/Home/Home/Home';
 import NotFound from '../Pages/NotFound/NotFound';
@@ -27,8 +31,22 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '/sign-in',
-    element: <p>Sign In</p>,
+    path: '/',
+    Component: AuthLayout,
+    children: [
+      {
+        path: 'register',
+        Component: Register,
+      },
+      {
+        path: 'sign-in',
+        Component: LogIn,
+      },
+      {
+        path: 'forgot-password',
+        Component: ForgotPassword,
+      },
+    ],
   },
 ]);
 
