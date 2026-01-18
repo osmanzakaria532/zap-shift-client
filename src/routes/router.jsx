@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import AuthLayout from '../layouts/AuthLayout';
 import RootLayout from '../layouts/RootLayout';
+import AboutUs from '../Pages/AboutUs/AboutUs';
 import ForgotPassword from '../Pages/Auth/ForgotPassword/ForgotPassword';
 import LogIn from '../Pages/Auth/LogIn/LogIn';
 import Register from '../Pages/Auth/Register/Register';
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
             <Rider />
           </PrivateRouter>
         ),
+      },
+      {
+        path: 'about-us',
+        Component: AboutUs,
       },
     ],
   },
