@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
@@ -10,13 +11,41 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const { registerUser } = useAuth();
+  const { registerUser, updateUserProfile } = useAuth();
 
   const handleRegistration = (data) => {
     console.log('Registration From Data', data);
+
+    // get photo to store in imgaeBB
+    const profileImg = data.photo[0];
+
     registerUser(data.email, data.password)
       .then((result) => {
         console.log(result.user);
+        // store image and get url
+        const formData = new FormData();
+        formData.append('image', profileImg);
+
+        //post photo in imageBB via axios
+        const image_api_url = `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_image_host_api_key
+        }`;
+        axios.post(image_api_url, formData).then((res) => {
+          console.log('after image upload', res.data.data.url);
+
+          // update profile
+          const updateProfile = {
+            displayName: data.name,
+            photoURL: res.data.data.url,
+          };
+          updateUserProfile(updateProfile)
+            .then(() => {
+              console.log('user profile updated done');
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -39,16 +68,10 @@ const Register = () => {
             className="input w-full"
             placeholder="Name"
             {...register('name', {
-              required: true,
-              maxLength: {
-                value: 20,
-                message: 'Name cannot be more than 20 characters',
-              },
+              required: 'Name is required',
             })}
           />
-          {errors.name?.type === 'required' && (
-            <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-          )}
+          {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
         </fieldset>
         <fieldset className="fieldset flex flex-col md:flex-row">
           {/* Resion And District */}
@@ -73,9 +96,9 @@ const Register = () => {
             type="file"
             className="file-input w-full"
             placeholder="Add Your Photo "
-            {...register('photo')}
+            {...register('photo', { required: true })}
           />
-          {/* {errors.photo && <p className="text-red-500 text-sm mt-1">{errors.photo.message}</p>} */}
+          {errors.photo && <p className="text-red-500 text-sm mt-1">Photo is Required</p>}
         </fieldset>
 
         <fieldset className="fieldset">
