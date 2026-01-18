@@ -6,13 +6,13 @@ const AuthLayout = () => {
   return (
     <div className="relative min-h-screen">
       {/* Logo */}
-      <div className="absolute top-4 left-4 z-50 hidden">
-        <Logo target="/" className="w-28" />
+      <div className="absolute  top-4 left-14 z-50 hidden md:block">
+        <Logo className="w-14 lg:w-28" />
       </div>
 
       <div className="md:flex min-h-screen">
         {/* Left side (form) */}
-        <div className="md:w-1/2 flex items-center justify-center bg-white">
+        <div className="w-full md:w-1/2 lg:flex items-center justify-center bg-white">
           <Outlet />
         </div>
 

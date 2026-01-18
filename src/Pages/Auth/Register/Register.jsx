@@ -13,19 +13,21 @@ const Register = () => {
   const { registerUser } = useAuth();
 
   const handleRegistration = (data) => {
-    console.log(data);
+    console.log('Registration From Data', data);
     registerUser(data.email, data.password)
       .then((result) => {
-        console.log(result);
+        console.log(result.user);
       })
       .catch((error) => {
         console.log(error);
       });
   };
   return (
-    <div className="py-10">
+    <div className="py-10 px-2 lg:px-0 md:flex flex-col justify-center items-center">
       <div className="text-center md:text-left mb-4 md:mb-0">
-        <h2 className="text-[22px] md:text-[42px] font-extrabold">Create an Account</h2>
+        <h2 className="text-[22px] md:text-[30px] lg:text-[42px] font-extrabold">
+          Create an Account
+        </h2>
         <p className="text-sm md:text-base">Register with ZapShift</p>
       </div>
       <form onSubmit={handleSubmit(handleRegistration)} className="w-full max-w-sm">
