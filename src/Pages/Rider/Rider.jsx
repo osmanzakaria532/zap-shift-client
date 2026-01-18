@@ -48,13 +48,13 @@ const Rider = () => {
       <Container>
         <div>
           <h2 className="text-6xl font-extrabold text-secondary">Be A Rider</h2>
-          <p className="text-info">
-            <div>
+          <div className="text-info">
+            <p>
               Enjoy fast, reliable parcel delivery with real-time tracking and zero hassle. From
               personal
-            </div>
-            <div> packages to business shipments — we deliver on time, every time.</div>
-          </p>
+            </p>
+            <p> packages to business shipments — we deliver on time, every time.</p>
+          </div>
         </div>
 
         <div className="mt-12">

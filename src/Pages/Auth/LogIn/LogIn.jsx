@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import SocialLogin from '../SocialLogin/SocialLogin';
 
@@ -10,12 +10,18 @@ const LogIn = () => {
     formState: { errors },
   } = useForm();
   const { signInUser } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // console.log('Login page', { location, navigate });
 
   const handleLogIn = (data) => {
     console.log('Login From Data', data);
     signInUser(data.email, data.password)
       .then((result) => {
         console.log(result.user);
+
+        navigate(location.state || '/');
       })
       .catch((error) => {
         console.log(error);
@@ -68,7 +74,11 @@ const LogIn = () => {
               </button>
               <p className="mt-2 text-sm md:text-base">
                 Don't have any account?{' '}
-                <Link to="/register" className="link link-hover text-[#8FA748]">
+                <Link
+                  to="/register"
+                  state={location.state}
+                  className="link link-hover text-[#8FA748]"
+                >
                   Register
                 </Link>
               </p>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import SocialLogin from '../SocialLogin/SocialLogin';
 
@@ -12,6 +12,10 @@ const Register = () => {
   } = useForm();
 
   const { registerUser, updateUserProfile } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  console.log('register page', { location, navigate });
 
   const handleRegistration = (data) => {
     console.log('Registration From Data', data);
@@ -148,7 +152,7 @@ const Register = () => {
         <button className="btn w-full bg-primary mt-4">Register</button>
         <p className="mt-2 text-sm md:text-base">
           Already have an account?{' '}
-          <Link to="/sign-in" className="link link-hover text-[#8FA748] ">
+          <Link to="/sign-in" state={location.state} className="link link-hover text-[#8FA748] ">
             Sign In
           </Link>
         </p>
