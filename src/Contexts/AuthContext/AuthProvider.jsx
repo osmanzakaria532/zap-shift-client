@@ -15,7 +15,7 @@ const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   // register user
   const registerUser = (email, password) => {
@@ -51,6 +51,7 @@ const AuthProvider = ({ children }) => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       // login / logout হলে current user state update করে
       setUser(currentUser);
+      setLoading(false);
     });
 
     // component unmount হলে listener remove করে
