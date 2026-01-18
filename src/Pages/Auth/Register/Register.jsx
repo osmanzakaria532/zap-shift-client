@@ -23,7 +23,7 @@ const Register = () => {
       });
   };
   return (
-    <div className="py-10 px-2 lg:px-0 md:flex flex-col justify-center items-center">
+    <div className="pt-16 pb-10 px-2 lg:px-0 md:flex flex-col justify-center items-center">
       <div className="text-center md:text-left mb-4 md:mb-0">
         <h2 className="text-[22px] md:text-[30px] lg:text-[42px] font-extrabold">
           Create an Account

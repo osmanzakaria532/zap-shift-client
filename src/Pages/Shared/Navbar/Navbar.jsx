@@ -2,8 +2,20 @@ import { MdArrowOutward } from 'react-icons/md';
 import { Link, NavLink } from 'react-router-dom';
 import Container from '../../../Components/Container';
 import Logo from '../../../Components/Logo/Logo';
+import useAuth from '../../../hooks/useAuth';
 
 const Navbar = () => {
+  const { user, logOut } = useAuth();
+
+  const handleSignOut = () => {
+    logOut()
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const menuItems = (
     <>
       <li>
@@ -59,14 +71,20 @@ const Navbar = () => {
             <ul className="menu menu-horizontal px-1">{menuItems}</ul>
           </div>
           <div className="navbar-end">
-            <Link to="/sign-in" className="flex">
-              <span className="border border-[#DADADA] bg-[#caeb66] rounded-lg px-2 md:px-4 py-1.5 text-sm md:text-base">
-                Sign in
-              </span>
-              <span className="rounded-full w-10 h-10 bg-[#03464D] md:flex items-center justify-center ms-1 hidden">
-                <MdArrowOutward className=" text-[#caeb66] text-2xl" />
-              </span>
-            </Link>
+            {user ? (
+              <button onClick={handleSignOut} className="btn">
+                Sign Out
+              </button>
+            ) : (
+              <Link to="/sign-in" className="flex">
+                <span className="border border-[#DADADA] bg-[#caeb66] rounded-lg px-2 md:px-4 py-1.5 text-sm md:text-base">
+                  Sign in
+                </span>
+                <span className="rounded-full w-10 h-10 bg-[#03464D] md:flex items-center justify-center ms-1 hidden">
+                  <MdArrowOutward className=" text-[#caeb66] text-2xl" />
+                </span>
+              </Link>
+            )}
           </div>
         </div>
       </Container>
