@@ -9,6 +9,7 @@ import Coverage from '../Pages/Coverage/Coverage';
 import Home from '../Pages/Home/Home/Home';
 import NotFound from '../Pages/NotFound/NotFound';
 import Rider from '../Pages/Rider/Rider';
+import SendParcel from '../Pages/SendParcel/SendParcel';
 import PrivateRouter from './PrivateRouter';
 
 const router = createBrowserRouter([
@@ -42,6 +43,16 @@ const router = createBrowserRouter([
       {
         path: 'about-us',
         Component: AboutUs,
+      },
+      {
+        path: 'send-a-parcel',
+        element: (
+          <PrivateRouter>
+            <SendParcel />,
+          </PrivateRouter>
+        ),
+        // Service Centers's Data loade From Public Folder
+        loader: () => fetch('/serviceCenters.json').then((res) => res.json()),
       },
     ],
   },
