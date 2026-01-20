@@ -1,6 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
+import { GoUnverified } from 'react-icons/go';
+import { MdDeleteSweep } from 'react-icons/md';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import { FaRegEdit } from 'react-icons/fa';
 
 const MyParcels = () => {
   // const { role } = useRole();
@@ -87,6 +90,53 @@ const MyParcels = () => {
               <th>Action</th>
             </tr>
           </thead>
+
+          <tbody>
+            {parcels.map((parcel, index) => (
+              <tr key={index}>
+                <th>{index + 1}</th>
+                <td>{parcel.parcelName}</td>
+                <td>{parcel.senderEmail}</td>
+                <td>{parcel.cost}</td>
+                <td>{parcel.parcelType}</td>
+                <td>{parcel.parcelWeight}</td>
+                <td>
+                  {parcel.paymentStatus === 'paid' ? (
+                    <span className="text-black btn btn-sm btn-square bg-primary">Paid</span>
+                  ) : (
+                    <>
+                      {/* <Link to={`/dashboard/payment/${parcel._id}`}>
+                      <button className="btn btn-sm btn-square hover:bg-primary">Pay</button>
+                    </Link> */}
+
+                      <button
+                        // onClick={() => handlePayment(parcel)}
+                        className="btn btn-sm btn-square hover:bg-primary"
+                      >
+                        Pay
+                      </button>
+                    </>
+                  )}
+                </td>
+                <td>{parcel?.deliveryStatus}</td>
+
+                <td className="space-x-2.5">
+                  <button className="btn btn-sm btn-square hover:bg-primary">
+                    <GoUnverified />
+                  </button>
+                  <button className="btn btn-sm btn-square hover:bg-primary">
+                    <FaRegEdit />
+                  </button>
+                  <button
+                    // onClick={() => handleParcelDelete(parcel._id)}
+                    className="btn btn-sm btn-square hover:bg-primary"
+                  >
+                    <MdDeleteSweep />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
     </div>
