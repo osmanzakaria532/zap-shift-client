@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { useForm } from 'react-hook-form';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useForm, useWatch } from 'react-hook-form';
+import { Link, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import SocialLogin from '../SocialLogin/SocialLogin';
 
@@ -9,13 +9,26 @@ const Register = () => {
     register,
     handleSubmit,
     formState: { errors },
+    control,
   } = useForm();
 
   const { registerUser, updateUserProfile } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+  const serviceCenters = useLoaderData();
 
-  console.log('register page', { location, navigate });
+  const regionsDuplicate = serviceCenters.map((center) => center.region);
+  const regions = [...new Set(regionsDuplicate)];
+  const districtsByRegion = (region) => {
+    // filter service centers by region
+    const filteredRegion = serviceCenters.filter((center) => center.region === region);
+    // map to get districts
+    const districts = filteredRegion.map((dct) => dct.district);
+    return districts;
+  };
+  const userRegion = useWatch({ control, name: 'userRegion' });
+
+  // console.log('register page', { location, navigate });
 
   const handleRegistration = (data) => {
     console.log('Registration From Data', data);
@@ -45,6 +58,7 @@ const Register = () => {
           updateUserProfile(updateProfile)
             .then(() => {
               console.log('user profile updated done');
+              navigate('/');
             })
             .catch((error) => {
               console.log(error);
@@ -81,14 +95,32 @@ const Register = () => {
           {/* Resion And District */}
           <div className="w-full md:w-1/2">
             <legend className="fieldset-legend">Your Region is</legend>
-            <select defaultValue="Select Your Region" className="select appearance-none  w-full">
+            <select
+              defaultValue="Select Your Region"
+              className="select appearance-none  w-full"
+              {...register('userRegion')}
+            >
               <option>Select Your Region</option>
+              {regions.map((region, index) => (
+                <option key={index} value={region}>
+                  {region}
+                </option>
+              ))}
             </select>
           </div>
           <div className="w-full md:w-1/2">
             <legend className="fieldset-legend">Your Dristrict is</legend>
-            <select defaultValue="Select Your Districts" className="select appearance-none  w-full">
+            <select
+              defaultValue="Select Your Districts"
+              className="select appearance-none  w-full"
+              {...register('userDistrict')}
+            >
               <option>Select Your Districts</option>
+              {districtsByRegion(userRegion).map((dristrict, index) => (
+                <option key={index} value={dristrict}>
+                  {dristrict}
+                </option>
+              ))}
             </select>
           </div>
         </fieldset>

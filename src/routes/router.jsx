@@ -63,6 +63,7 @@ const router = createBrowserRouter([
       {
         path: 'register',
         Component: Register,
+        loader: () => fetch('/serviceCenters.json').then((res) => res.json()),
       },
       {
         path: 'sign-in',
