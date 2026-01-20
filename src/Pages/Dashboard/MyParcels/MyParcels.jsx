@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
+import { FaRegEdit } from 'react-icons/fa';
 import { GoUnverified } from 'react-icons/go';
 import { MdDeleteSweep } from 'react-icons/md';
+import Swal from 'sweetalert2';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
-import { FaRegEdit } from 'react-icons/fa';
 
 const MyParcels = () => {
   // const { role } = useRole();
@@ -11,7 +12,7 @@ const MyParcels = () => {
   const axiosSecure = useAxiosSecure();
 
   // useQuery to fetch parcels data
-  const { data: parcels = [] } = useQuery({
+  const { data: parcels = [], refetch } = useQuery({
     queryKey: ['myParcels', user?.email],
     // enabled: !!user?.email && !!role, // role & email available na thakle fetch hobe na
     queryFn: async () => {
@@ -24,36 +25,36 @@ const MyParcels = () => {
   // // console.log('in my parcel ', parcels);
 
   // // Handle delete parcel
-  // const handleParcelDelete = (parcelId) => {
-  //   // Implement delete functionality here
-  //   // console.log('Delete parcel with ID:', parcelId);
+  const handleParcelDelete = (parcelId) => {
+    console.log('Delete parcel with ID:', parcelId);
 
-  //   // Confirmation dialog
-  //   Swal.fire({
-  //     title: 'Are you sure?',
-  //     text: 'Your parcel has been canceled!',
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonColor: '#3085d6',
-  //     cancelButtonColor: '#d33',
-  //     confirmButtonText: "Yes, I'm!",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       axiosSecure.delete(`/parcels/${parcelId}`).then((res) => {
-  //         console.log('deleted response', res.data);
-  //         if (res.data.deletedCount) {
-  //           Swal.fire({
-  //             title: 'Deleted!',
-  //             text: 'Your Parcel has been deleted.',
-  //             icon: 'success',
-  //           });
-  //           // Refetch parcels after deletion
-  //           refetch();
-  //         }
-  //       });
-  //     }
-  //   });
-  // };
+    // Implement delete functionality here
+    // Confirmation dialog
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Your parcel has been canceled!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: "Yes, I'm!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/parcels/${parcelId}`).then((res) => {
+          console.log('deleted parcel', res.data);
+          if (res.data.deletedCount) {
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'Your Parcel has been deleted.',
+              icon: 'success',
+            });
+            // Refetch parcels after deletion
+            refetch();
+          }
+        });
+      }
+    });
+  };
 
   // handle pament
   // const handlePayment = async (parcel) => {
@@ -128,7 +129,7 @@ const MyParcels = () => {
                     <FaRegEdit />
                   </button>
                   <button
-                    // onClick={() => handleParcelDelete(parcel._id)}
+                    onClick={() => handleParcelDelete(parcel._id)}
                     className="btn btn-sm btn-square hover:bg-primary"
                   >
                     <MdDeleteSweep />
