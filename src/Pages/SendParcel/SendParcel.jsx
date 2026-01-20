@@ -1,15 +1,14 @@
 /* eslint-disable no-unused-vars */
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { useLoaderData } from 'react-router-dom';
 import Container from '../../Components/Container';
 
 const SendParcel = () => {
-  const { register, handleSubmit, watch, control, reset } = useForm();
+  const { register, handleSubmit, control, reset } = useForm();
   const serviceCenters = useLoaderData();
   const regionsDuplicate = serviceCenters.map((center) => center.region);
-  const regions = [...new Set(regionsDuplicate)];
-  const senderRegion = watch('senderRegion');
 
+  const regions = [...new Set(regionsDuplicate)];
   const districtsByRegion = (region) => {
     // filter service centers by region
     const filteredRegion = serviceCenters.filter((center) => center.region === region);
@@ -17,6 +16,8 @@ const SendParcel = () => {
     const districts = filteredRegion.map((dct) => dct.district);
     return districts;
   };
+  const senderRegion = useWatch({ control, name: 'senderRegion' });
+  const receiverRegion = useWatch({ control, name: 'receiverRegion' });
 
   // // get secure axios instance
   // const axiosSecure = useAxiosSecure();
@@ -314,6 +315,11 @@ const SendParcel = () => {
                         {...register('receiverRegion')}
                       >
                         <option disabled={true}>Select Your Region</option>
+                        {regions.map((region, index) => (
+                          <option key={index} value={region}>
+                            {region}
+                          </option>
+                        ))}
                       </select>
                     </fieldset>
 
@@ -326,6 +332,11 @@ const SendParcel = () => {
                         {...register('receiverDristrict')}
                       >
                         <option disabled={true}>Select Your Districts</option>
+                        {districtsByRegion(receiverRegion).map((dristrict, index) => (
+                          <option key={index} value={dristrict}>
+                            {dristrict}
+                          </option>
+                        ))}
                       </select>
                     </fieldset>
                   </div>
