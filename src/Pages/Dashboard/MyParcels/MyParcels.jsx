@@ -1,19 +1,22 @@
+import { useQuery } from '@tanstack/react-query';
+import useAuth from '../../../hooks/useAuth';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
+
 const MyParcels = () => {
   // const { role } = useRole();
-  // const { user } = useAuth();
-  // const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
-  // // useQuery to fetch parcels data
-  // const { data: parcels = [], refetch } = useQuery({
-  //   queryKey: ['myParcels', user?.email, role],
-  //   enabled: !!user?.email && !!role, // role & email available na thakle fetch hobe na
-  //   queryFn: async () => {
-  //     if (!user?.email || !role) return [];
-
-  //     const res = await axiosSecure.get(`/parcels?email=${user?.email}&role=${role}`);
-  //     return res.data;
-  //   },
-  // });
+  // useQuery to fetch parcels data
+  const { data: parcels = [] } = useQuery({
+    queryKey: ['myParcels', user?.email],
+    // enabled: !!user?.email && !!role, // role & email available na thakle fetch hobe na
+    queryFn: async () => {
+      // if (!user?.email || !role) return [];
+      const res = await axiosSecure.get(`/parcels?email=${user?.email}`);
+      return res.data;
+    },
+  });
 
   // // console.log('in my parcel ', parcels);
 
@@ -67,7 +70,7 @@ const MyParcels = () => {
   // };
   return (
     <div>
-      {/* <h3>my parcels : {parcels.length}</h3> */}
+      <h3>My parcels : {parcels.length}</h3>
       <div className="overflow-x-auto">
         <table className="table table-zebra">
           {/* head */}
