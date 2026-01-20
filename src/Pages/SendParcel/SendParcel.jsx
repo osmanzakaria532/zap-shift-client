@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useForm, useWatch } from 'react-hook-form';
 import { useLoaderData } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import Container from '../../Components/Container';
 
 const SendParcel = () => {
@@ -19,46 +20,56 @@ const SendParcel = () => {
   const senderRegion = useWatch({ control, name: 'senderRegion' });
   const receiverRegion = useWatch({ control, name: 'receiverRegion' });
 
-  // // get secure axios instance
   // const axiosSecure = useAxiosSecure();
   // const navigate = useNavigate();
-  // // get user data from auth context
-  // const { user } = useAuth();
-  // // get service centers data from loader
-  // // get unique regions
-  // // watch senderRegion and receiverRegion fields
-  // const receiverRegion = useWatch({ control, name: 'receiverRegion' });
-  // // function to get districts by region
 
   const handleSendParcel = (data) => {
-    console.log(data);
+    const isDocument = data.parcelType === 'document';
+    const parcelWeight = parseFloat(data.parcelWeight);
+    const isSameDistrict = data.senderDistrict === data.receiverDistrict;
+
+    let cost = 0;
+    if (isDocument) {
+      cost = isSameDistrict ? 60 : 80;
+    } else {
+      if (parcelWeight < 3) {
+        cost = isSameDistrict ? 110 : 150;
+      } else {
+        const minCharge = isSameDistrict ? 110 : 150;
+        const extraWeight = parcelWeight - 3;
+        const extraCharge = isSameDistrict ? extraWeight * 40 : extraWeight * 40 + 40;
+        cost = minCharge + extraCharge;
+      }
+    }
+
+    Swal.fire({
+      title: 'aggree with the cost?',
+      text: `You will be charged! ${cost} BDT`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirm and Contiue Payment!',
+    }).then((result) => {
+      console.log(result);
+      // Swal.fire({
+      //   position: 'top-end',
+      //   icon: 'success',
+      //   title: 'Your work has been saved',
+      //   showConfirmButton: false,
+      //   timer: 1500,
+      // });
+    });
   };
 
   // const handleSendParcel = (data) => {
   //   console.log('Parcel data', data);
 
   //   // check if parcel is document or non-document
-  //   const isDocument = data.parcelType === 'document';
-
   //   // parse parcel weight to float
-  //   const parcelWeight = parseFloat(data.parcelWeight);
-
   //   // check if sender and receiver district are same
-  //   const isSameDistrict = data.senderDistrict === data.receiverDistrict;
 
-  //   let cost = 0;
-  //   if (isDocument) {
-  //     cost = isSameDistrict ? 60 : 80;
-  //   } else {
-  //     if (parcelWeight < 3) {
-  //       cost = isSameDistrict ? 110 : 150;
-  //     } else {
-  //       const minCharge = isSameDistrict ? 110 : 150;
-  //       const extraWeight = parcelWeight - 3;
-  //       const extraCharge = isSameDistrict ? extraWeight * 40 : extraWeight * 40 + 40;
-  //       cost = minCharge + extraCharge;
-  //     }
-  //   }
+  //
   //   console.log('Total cost:', cost);
   //   data.cost = cost;
   //   Swal.fire({
@@ -227,7 +238,7 @@ const SendParcel = () => {
                       <select
                         defaultValue="Select Your Districts"
                         className="select appearance-none  w-full"
-                        {...register('senderDristrict')}
+                        {...register('senderDistrict')}
                       >
                         <option disabled={true}>Select Your Districts</option>
                         {districtsByRegion(senderRegion).map((dristrict, index) => (
@@ -329,7 +340,7 @@ const SendParcel = () => {
                       <select
                         defaultValue="Select Your Districts"
                         className="select appearance-none w-full"
-                        {...register('receiverDristrict')}
+                        {...register('receiverDistrict')}
                       >
                         <option disabled={true}>Select Your Districts</option>
                         {districtsByRegion(receiverRegion).map((dristrict, index) => (
