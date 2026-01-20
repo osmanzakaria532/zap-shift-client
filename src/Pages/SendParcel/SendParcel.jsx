@@ -3,11 +3,15 @@ import { useForm, useWatch } from 'react-hook-form';
 import { useLoaderData } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Container from '../../Components/Container';
+import useAuth from '../../hooks/useAuth';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const SendParcel = () => {
   const { register, handleSubmit, control, reset } = useForm();
   const serviceCenters = useLoaderData();
   const regionsDuplicate = serviceCenters.map((center) => center.region);
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
 
   const regions = [...new Set(regionsDuplicate)];
   const districtsByRegion = (region) => {
@@ -20,7 +24,6 @@ const SendParcel = () => {
   const senderRegion = useWatch({ control, name: 'senderRegion' });
   const receiverRegion = useWatch({ control, name: 'receiverRegion' });
 
-  // const axiosSecure = useAxiosSecure();
   // const navigate = useNavigate();
 
   const handleSendParcel = (data) => {
@@ -43,7 +46,7 @@ const SendParcel = () => {
     }
 
     Swal.fire({
-      title: 'aggree with the cost?',
+      title: 'agree with the cost?',
       text: `You will be charged! ${cost} BDT`,
       icon: 'warning',
       showCancelButton: true,
@@ -51,7 +54,12 @@ const SendParcel = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Confirm and Contiue Payment!',
     }).then((result) => {
-      console.log(result);
+      if (result.isConfirmed) {
+        // save the parcel to thae database
+        axiosSecure.post('/parcels', data).then((res) => {
+          console.log('after saning parcel in database', res.data);
+        });
+      }
       // Swal.fire({
       //   position: 'top-end',
       //   icon: 'success',
@@ -174,6 +182,7 @@ const SendParcel = () => {
                       type="text"
                       className="input w-full"
                       placeholder="Sender Name"
+                      defaultValue={user?.displayName}
                       {...register('senderName')}
                     />
                   </fieldset>
@@ -184,6 +193,7 @@ const SendParcel = () => {
                       type="email"
                       className="input w-full"
                       placeholder="Sender Email"
+                      defaultValue={user?.email}
                       {...register('senderEmail')}
                     />
                   </fieldset>
