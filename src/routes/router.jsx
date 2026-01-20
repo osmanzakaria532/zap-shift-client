@@ -1,11 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom';
 import AuthLayout from '../layouts/AuthLayout';
+import DashboardLayout from '../layouts/DashboardLayout';
 import RootLayout from '../layouts/RootLayout';
 import AboutUs from '../Pages/AboutUs/AboutUs';
 import ForgotPassword from '../Pages/Auth/ForgotPassword/ForgotPassword';
 import LogIn from '../Pages/Auth/LogIn/LogIn';
 import Register from '../Pages/Auth/Register/Register';
 import Coverage from '../Pages/Coverage/Coverage';
+import DashBoard from '../Pages/Dashboard/DashBoard';
+import MyParcels from '../Pages/Dashboard/MyParcels/MyParcels';
 import Home from '../Pages/Home/Home/Home';
 import NotFound from '../Pages/NotFound/NotFound';
 import Rider from '../Pages/Rider/Rider';
@@ -13,6 +16,7 @@ import SendParcel from '../Pages/SendParcel/SendParcel';
 import PrivateRouter from './PrivateRouter';
 
 const router = createBrowserRouter([
+  // RootLayout
   {
     path: '/',
     Component: RootLayout,
@@ -56,6 +60,28 @@ const router = createBrowserRouter([
       },
     ],
   },
+
+  // Dashboard Layout
+  {
+    path: '/dashboard',
+    element: (
+      <PrivateRouter>
+        <DashboardLayout />
+      </PrivateRouter>
+    ),
+    children: [
+      {
+        path: '',
+        Component: DashBoard,
+      },
+      {
+        path: 'my-parcels',
+        Component: MyParcels,
+      },
+    ],
+  },
+
+  // AuthLayout
   {
     path: '/',
     Component: AuthLayout,

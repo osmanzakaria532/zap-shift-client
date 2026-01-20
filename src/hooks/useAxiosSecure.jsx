@@ -1,7 +1,6 @@
 import axios from 'axios';
 const axiosSecure = axios.create({
-  // baseURL: 'http://localhost:5000',
-  baseURL: 'https://zap-shift-server-osmanzakaria.vercel.app',
+  baseURL: import.meta.env.VITE_API_BASE_URL,
 });
 
 const useAxiosSecure = () => {

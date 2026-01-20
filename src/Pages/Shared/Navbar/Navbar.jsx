@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { MdArrowOutward } from 'react-icons/md';
 import { Link, NavLink } from 'react-router-dom';
 import Container from '../../../Components/Container';
@@ -5,7 +6,9 @@ import Logo from '../../../Components/Logo/Logo';
 import useAuth from '../../../hooks/useAuth';
 
 const Navbar = () => {
+  const [show, setShow] = useState(false);
   const { user, logOut } = useAuth();
+  // console.log(user?.photoURL);
 
   const handleSignOut = () => {
     logOut()
@@ -33,6 +36,11 @@ const Navbar = () => {
       <li>
         <NavLink to="/be-a-rider">Be a Rider</NavLink>
       </li>
+      {user && (
+        <li>
+          <NavLink to="/dashboard/my-parcels">My Parcel</NavLink>
+        </li>
+      )}
     </>
   );
   return (
@@ -72,9 +80,29 @@ const Navbar = () => {
           </div>
           <div className="navbar-end">
             {user ? (
-              <button onClick={handleSignOut} className="btn">
-                Sign Out
-              </button>
+              <>
+                <div onClick={() => setShow(!show)} className="relative cursor-pointer">
+                  <img
+                    src={user?.photoURL}
+                    alt="Profile photo"
+                    className="rounded-full w-10 h-10"
+                  />
+                  {show && (
+                    <div className="w-32 absolute -right-2 mt-3 bg-white px-2 py-2 space-y-1.5 flex flex-col justify-end items-end text-center">
+                      <div className="w-full">
+                        <Link to="/dashboard" className="py-2 px-3 block bg-gray-400/10 ">
+                          Dashboard
+                        </Link>
+                      </div>
+                      <div className="w-full">
+                        <button onClick={handleSignOut} className="btn px-3 w-full">
+                          Sign Out
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </>
             ) : (
               <Link to="/sign-in" className="flex">
                 <span className="border border-[#DADADA] bg-[#caeb66] rounded-lg px-2 md:px-4 py-1.5 text-sm md:text-base">
