@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query';
 import { FaRegEdit } from 'react-icons/fa';
 import { GoUnverified } from 'react-icons/go';
 import { MdDeleteSweep } from 'react-icons/md';
-import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
@@ -58,21 +57,20 @@ const MyParcels = () => {
   };
 
   // handle pament
-  // const handlePayment = async (parcel) => {
-  //   console.log(parcel);
+  const handlePayment = async (parcel) => {
+    console.log(parcel);
 
-  //   const paymentInfo = {
-  //     cost: parcel.cost,
-  //     parcelId: parcel._id,
-  //     senderEmail: parcel.senderEmail,
-  //     parcelName: parcel.parcelName,
-  //   };
+    const paymentInfo = {
+      cost: parcel.cost,
+      parcelId: parcel._id,
+      senderEmail: parcel.senderEmail,
+      parcelName: parcel.parcelName,
+    };
 
-  //   const res = await axiosSecure.post('/payment-checkout-session', paymentInfo);
-  //   console.log(res.data);
-  //   //
-  //   window.location.assign(res.data.url);
-  // };
+    const res = await axiosSecure.post('/payment-checkout-session', paymentInfo);
+    // console.log(res.data);
+    window.location.assign(res.data.url);
+  };
   return (
     <div>
       <h3>My parcels : {parcels.length}</h3>
@@ -107,16 +105,18 @@ const MyParcels = () => {
                     <span className="text-black btn btn-sm btn-square bg-primary">Paid</span>
                   ) : (
                     <>
-                      <Link to={`/dashboard/payment/${parcel._id}`}>
+                      {/* ONE PROCESS TO PAYMENT  */}
+                      {/* <Link to={`/dashboard/payment/${parcel._id}`}>
                         <button className="btn btn-sm btn-square hover:bg-primary">Pay</button>
-                      </Link>
+                      </Link> */}
 
-                      {/* <button
-                        // onClick={() => handlePayment(parcel)}
+                      {/* SECOND PROCESS TO PAYMENT */}
+                      <button
+                        onClick={() => handlePayment(parcel)}
                         className="btn btn-sm btn-square hover:bg-primary"
                       >
                         Pay
-                      </button> */}
+                      </button>
                     </>
                   )}
                 </td>

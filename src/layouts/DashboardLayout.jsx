@@ -37,7 +37,7 @@ const DashboardLayout = () => {
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
         {/* Navbar */}
-        <nav className="navbar w-full justify-between bg-white sticky top-0 z-50">
+        <nav className="navbar w-full justify-between bg-white sticky top-0 z-40">
           {/* Sidebar icon */}
           <ul>
             <li>
@@ -86,7 +86,7 @@ const DashboardLayout = () => {
         </div>
       </div>
 
-      <div className="drawer-side is-drawer-close:overflow-visible">
+      <div className="drawer-side is-drawer-close:overflow-visible z-50">
         <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
         <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-44">
           {/* Sidebar content here */}
