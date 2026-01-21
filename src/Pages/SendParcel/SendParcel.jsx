@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useForm, useWatch } from 'react-hook-form';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Container from '../../Components/Container';
 import useAuth from '../../hooks/useAuth';
@@ -12,6 +12,7 @@ const SendParcel = () => {
   const regionsDuplicate = serviceCenters.map((center) => center.region);
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const regions = [...new Set(regionsDuplicate)];
   const districtsByRegion = (region) => {
@@ -58,27 +59,27 @@ const SendParcel = () => {
       if (result.isConfirmed) {
         // save the parcel to thae database
         axiosSecure.post('/parcels', data).then((res) => {
-          console.log('after saning parcel in database', res.data);
+          // console.log('after saning parcel in database', res.data);
+          if (res.data.insertedId) {
+            navigate('/dashboard/my-parcels');
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Parcel has created. Please Pay ',
+              showConfirmButton: false,
+              timer: 2500,
+            });
+          }
         });
       }
-      // Swal.fire({
-      //   position: 'top-end',
-      //   icon: 'success',
-      //   title: 'Your work has been saved',
-      //   showConfirmButton: false,
-      //   timer: 1500,
-      // });
     });
   };
 
   // const handleSendParcel = (data) => {
-  //   console.log('Parcel data', data);
-
-  //   // check if parcel is document or non-document
-  //   // parse parcel weight to float
-  //   // check if sender and receiver district are same
-
-  //
+  // console.log('Parcel data', data);
+  // check if parcel is document or non-document
+  // parse parcel weight to float
+  // check if sender and receiver district are same
   //   console.log('Total cost:', cost);
   //   data.cost = cost;
   //   Swal.fire({
@@ -91,7 +92,7 @@ const SendParcel = () => {
   //     confirmButtonText: 'Confirm and Contiue Payment!',
   //   }).then((result) => {
   //     if (result.isConfirmed) {
-  //       // post parcel data to server
+  // post parcel data to server
   //       axiosSecure.post('/parcels', data).then((res) => {
   //         console.log('after saving data', res.data);
 
