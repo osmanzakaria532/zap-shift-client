@@ -37,7 +37,7 @@ const DashboardLayout = () => {
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
         {/* Navbar */}
-        <nav className="navbar w-full justify-between bg-white">
+        <nav className="navbar w-full justify-between bg-white sticky top-0 z-50">
           {/* Sidebar icon */}
           <ul>
             <li>
@@ -81,7 +81,7 @@ const DashboardLayout = () => {
           </div>
         </nav>
         {/* Page content here */}
-        <div className="p-4">
+        <div className="p-4 relative">
           <Outlet />
         </div>
       </div>

@@ -1,37 +1,35 @@
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router';
-import useAxiosSecure from '../../../../hooks/useAxiosSecure';
-
 const PaymentSuccess = () => {
-  const [paymentInfo, setPaymentInfo] = useState({});
-  // get the id from url after payment seccussfully
-  const [serachParams] = useSearchParams();
-  // store the id
-  const sessionId = serachParams.get('session_id');
+  // const [paymentInfo, setPaymentInfo] = useState({});
+  // // get the id from url after payment seccussfully
+  // const [serachParams] = useSearchParams();
+  // // store the id
+  // const sessionId = serachParams.get('session_id');
 
-  const axiosSecure = useAxiosSecure();
+  // const axiosSecure = useAxiosSecure();
 
-  // console.log(sessionId);
+  // // console.log(sessionId);
 
-  // check the payment from backend api
-  useEffect(() => {
-    if (sessionId) {
-      axiosSecure.patch(`/payment-success?session_id=${sessionId}`).then((res) => {
-        console.log(res.data);
-        setPaymentInfo({
-          transactionId: res.data.transactionId,
-          trackingId: res.data.trackingId,
-        });
-      });
-    }
-  }, [sessionId, axiosSecure]);
+  // // check the payment from backend api
+  // useEffect(() => {
+  //   if (sessionId) {
+  //     axiosSecure.patch(`/payment-success?session_id=${sessionId}`).then((res) => {
+  //       console.log(res.data);
+  //       setPaymentInfo({
+  //         transactionId: res.data.transactionId,
+  //         trackingId: res.data.trackingId,
+  //       });
+  //     });
+  //   }
+  // }, [sessionId, axiosSecure]);
 
   return (
-    <div>
-      <h2 className="text-3xl font-bold capitalize mb-10">payment success</h2>
+    <div className="flex justify-center items-center min-h-screen ">
       <div>
-        <p>Your Transaction ID : {paymentInfo.transactionId}</p>
-        <p>Your Tracking ID : {paymentInfo.trackingId}</p>
+        <h2 className="text-3xl font-bold capitalize mb-10">payment success</h2>
+        <div>
+          {/* <p>Your Transaction ID : {paymentInfo.transactionId}</p>
+        <p>Your Tracking ID : {paymentInfo.trackingId}</p> */}
+        </div>
       </div>
     </div>
   );

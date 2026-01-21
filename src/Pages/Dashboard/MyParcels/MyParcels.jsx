@@ -23,9 +23,9 @@ const MyParcels = () => {
     },
   });
 
-  // // console.log('in my parcel ', parcels);
+  // console.log('in my parcel ', parcels);
 
-  // // Handle delete parcel
+  // Handle delete parcel
   const handleParcelDelete = (parcelId) => {
     console.log('Delete parcel with ID:', parcelId);
 

@@ -20,30 +20,29 @@ const Payment = () => {
     return Loading;
   }
 
-  // const handlePayment = async () => {
-  //   const paymentInfo = {
-  //     cost: parcel.cost,
-  //     parcelId: parcel.parcelId,
-  //     senderEmail: parcel.senderEmail,
-  //     parcelName: parcel.parcelName,
-  //   };
+  const handlePayment = async () => {
+    const paymentInfo = {
+      cost: parcel.cost,
+      parcelId: parcel.parcelId,
+      senderEmail: parcel.senderEmail,
+      parcelName: parcel.parcelName,
+    };
 
-  //   const res = await axiosSecure.post('/create-checkout-session', paymentInfo);
-  //   console.log(res.data);
-  //   window.location.href = res.data.url;
-  // };
+    const res = await axiosSecure.post('/create-checkout-session', paymentInfo);
+    console.log(res.data);
+    window.location.href = res.data.url;
+  };
   return (
-    <div>
-      <h2 className="text-2xl  mb-10">
-        please Pay <span className="underline font-bold">$ {parcel.cost} </span>
-        for :<span> {parcel.parcelName}</span>
-      </h2>
-      <button
-        // onClick={handlePayment}
-        className="btn hover:bg-primary"
-      >
-        Pay
-      </button>
+    <div className="flex justify-center items-center min-h-screen ">
+      <div className="text-center">
+        <h2 className="text-2xl  mb-10">
+          Please Pay <span className="underline font-bold">$ {parcel.cost} </span>
+          for : <span> {parcel.parcelName}</span>
+        </h2>
+        <button onClick={handlePayment} className="btn hover:bg-primary">
+          Pay
+        </button>
+      </div>
     </div>
   );
 };
