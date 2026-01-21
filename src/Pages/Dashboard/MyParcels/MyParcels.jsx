@@ -102,7 +102,9 @@ const MyParcels = () => {
                 <td>{parcel.parcelWeight}</td>
                 <td>
                   {parcel.paymentStatus === 'paid' ? (
-                    <span className="text-black btn btn-sm btn-square bg-primary">Paid</span>
+                    <span className="text-black btn btn-sm px-6 btn-square bg-green-400 btn-disabled">
+                      Paid
+                    </span>
                   ) : (
                     <>
                       {/* ONE PROCESS TO PAYMENT  */}
@@ -113,7 +115,7 @@ const MyParcels = () => {
                       {/* SECOND PROCESS TO PAYMENT */}
                       <button
                         onClick={() => handlePayment(parcel)}
-                        className="btn btn-sm btn-square hover:bg-primary"
+                        className="btn btn-sm px-6 btn-square hover:bg-primary"
                       >
                         Pay
                       </button>
