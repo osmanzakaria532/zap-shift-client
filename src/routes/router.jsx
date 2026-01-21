@@ -9,6 +9,7 @@ import Register from '../Pages/Auth/Register/Register';
 import Coverage from '../Pages/Coverage/Coverage';
 import DashBoard from '../Pages/Dashboard/DashBoard';
 import MyParcels from '../Pages/Dashboard/MyParcels/MyParcels';
+import Payment from '../Pages/Dashboard/Payment/Payment';
 import Home from '../Pages/Home/Home/Home';
 import NotFound from '../Pages/NotFound/NotFound';
 import Rider from '../Pages/Rider/Rider';
@@ -61,26 +62,6 @@ const router = createBrowserRouter([
     ],
   },
 
-  // Dashboard Layout
-  {
-    path: '/dashboard',
-    element: (
-      <PrivateRouter>
-        <DashboardLayout />
-      </PrivateRouter>
-    ),
-    children: [
-      {
-        path: '',
-        Component: DashBoard,
-      },
-      {
-        path: 'my-parcels',
-        Component: MyParcels,
-      },
-    ],
-  },
-
   // AuthLayout
   {
     path: '/',
@@ -98,6 +79,30 @@ const router = createBrowserRouter([
       {
         path: 'forgot-password',
         Component: ForgotPassword,
+      },
+    ],
+  },
+
+  // Dashboard Layout
+  {
+    path: '/dashboard',
+    element: (
+      <PrivateRouter>
+        <DashboardLayout />
+      </PrivateRouter>
+    ),
+    children: [
+      {
+        path: '',
+        Component: DashBoard,
+      },
+      {
+        path: 'my-parcels',
+        Component: MyParcels,
+      },
+      {
+        path: 'payment/:parcelId',
+        Component: Payment,
       },
     ],
   },

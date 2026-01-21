@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { FaRegEdit } from 'react-icons/fa';
 import { GoUnverified } from 'react-icons/go';
 import { MdDeleteSweep } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
@@ -106,16 +107,16 @@ const MyParcels = () => {
                     <span className="text-black btn btn-sm btn-square bg-primary">Paid</span>
                   ) : (
                     <>
-                      {/* <Link to={`/dashboard/payment/${parcel._id}`}>
-                      <button className="btn btn-sm btn-square hover:bg-primary">Pay</button>
-                    </Link> */}
+                      <Link to={`/dashboard/payment/${parcel._id}`}>
+                        <button className="btn btn-sm btn-square hover:bg-primary">Pay</button>
+                      </Link>
 
-                      <button
+                      {/* <button
                         // onClick={() => handlePayment(parcel)}
                         className="btn btn-sm btn-square hover:bg-primary"
                       >
                         Pay
-                      </button>
+                      </button> */}
                     </>
                   )}
                 </td>
