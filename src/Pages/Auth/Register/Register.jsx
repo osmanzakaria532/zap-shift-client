@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useForm, useWatch } from 'react-hook-form';
 import { Link, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import SocialLogin from '../SocialLogin/SocialLogin';
 
 const Register = () => {
@@ -16,6 +17,7 @@ const Register = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const serviceCenters = useLoaderData();
+  const axiosSecure = useAxiosSecure();
 
   const regionsDuplicate = serviceCenters.map((center) => center.region);
   const regions = [...new Set(regionsDuplicate)];
@@ -37,8 +39,8 @@ const Register = () => {
     const profileImg = data.photo[0];
 
     registerUser(data.email, data.password)
-      .then((result) => {
-        console.log(result.user);
+      .then(() => {
+        // console.log(result.user);
         // store image and get url
         const formData = new FormData();
         formData.append('image', profileImg);
@@ -48,16 +50,34 @@ const Register = () => {
           import.meta.env.VITE_image_host_api_key
         }`;
         axios.post(image_api_url, formData).then((res) => {
-          console.log('after image upload', res.data.data.url);
+          const photoURL = res.data.data.url;
+
+          // create user profile data in database
+          const userInfo = {
+            displayName: data.name,
+            email: data.email,
+            region: data.userRegion,
+            district: data.userDistrict,
+          };
+          axiosSecure
+            .post('/users', userInfo)
+            .then((res) => {
+              if (res.data.insertedId) {
+                // alert('User Created Successfully');
+                console.log('Created User in DB', res.data);
+              }
+            })
+            .catch((error) => {
+              console.log('Error Creating User in DB', error);
+            });
 
           // update profile
           const updateProfile = {
             displayName: data.name,
-            photoURL: res.data.data.url,
+            photoURL: photoURL,
           };
           updateUserProfile(updateProfile)
             .then(() => {
-              console.log('user profile updated done');
               navigate('/');
             })
             .catch((error) => {
