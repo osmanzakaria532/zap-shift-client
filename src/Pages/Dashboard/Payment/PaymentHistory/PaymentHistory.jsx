@@ -84,7 +84,17 @@ const PaymentHistory = () => {
                 <td>$ {payment.amount}</td>
                 <td>{payment?.transactionId || 'N/A'}</td>
                 <td>{payment?.trackingId?.slice(-8) || 'N/A'}</td>
-                <td>{payment.paidAt}</td>
+                <td>
+                  {new Date().toLocaleString('en-GB', {
+                    timeZone: 'Asia/Dhaka',
+                    year: 'numeric',
+                    month: 'short',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true,
+                  })}
+                </td>
                 <td className="space-x-2.5">
                   <button
                     onClick={() => handlePaymentDetails(payment._id)}
