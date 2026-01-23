@@ -4,6 +4,7 @@ import { Link, useLoaderData, useLocation, useNavigate } from 'react-router-dom'
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import SocialLogin from '../SocialLogin/SocialLogin';
+import Swal from 'sweetalert2';
 
 const Register = () => {
   const {
@@ -56,6 +57,7 @@ const Register = () => {
           const userInfo = {
             displayName: data.name,
             email: data.email,
+            photoURL: photoURL,
             region: data.userRegion,
             district: data.userDistrict,
           };
@@ -65,6 +67,13 @@ const Register = () => {
               if (res.data.insertedId) {
                 // alert('User Created Successfully');
                 console.log('Created User in DB', res.data);
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Created User in DB Successfully',
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
               }
             })
             .catch((error) => {
