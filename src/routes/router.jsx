@@ -6,6 +6,7 @@ import AboutUs from '../Pages/AboutUs/AboutUs';
 import ForgotPassword from '../Pages/Auth/ForgotPassword/ForgotPassword';
 import LogIn from '../Pages/Auth/LogIn/LogIn';
 import Register from '../Pages/Auth/Register/Register';
+import CompleteProfile from '../Pages/Auth/SocialLogin/CompleteProfile';
 import Coverage from '../Pages/Coverage/Coverage';
 import DashBoard from '../Pages/Dashboard/DashBoard';
 import MyParcels from '../Pages/Dashboard/MyParcels/MyParcels';
@@ -82,6 +83,11 @@ const router = createBrowserRouter([
       {
         path: 'forgot-password',
         Component: ForgotPassword,
+      },
+      {
+        path: 'complete-profile',
+        Component: CompleteProfile,
+        loader: () => fetch('/serviceCenters.json').then((res) => res.json()),
       },
     ],
   },
