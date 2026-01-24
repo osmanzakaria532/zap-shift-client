@@ -1,14 +1,17 @@
 /* eslint-disable no-unused-vars */
 import { useForm, useWatch } from 'react-hook-form';
 import { useLoaderData } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import riderImg from '../../../src/assets/agent-pending.png';
 import Container from '../../Components/Container';
+import useAuth from '../../hooks/useAuth';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const Rider = () => {
   const { register, handleSubmit, control, reset } = useForm();
   // get user & axiosInstance
-  // const { user } = useAuth();
-  // const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
   // get service centers data from loader
   const serviceCenters = useLoaderData();
@@ -28,17 +31,18 @@ const Rider = () => {
   const handleRiderApplication = (data) => {
     console.log(data);
 
-    //   axiosSecure.post('/riders', data).then((res) => {
-    //     if (res.data.insertedId) {
-    //       Swal.fire({
-    //         position: 'top-end',
-    //         icon: 'success',
-    //         title: 'Your appication has been submitted',
-    //         showConfirmButton: false,
-    //         timer: 1500,
-    //       });
-    //     }
-    //   });
+    axiosSecure.post('/riders', data).then((res) => {
+      if (res.data.insertedId) {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Your appication has been submitted',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        reset();
+      }
+    });
   };
 
   return (
@@ -78,7 +82,7 @@ const Rider = () => {
                     name="name"
                     className="input w-full border-[#CBD5E1]"
                     placeholder="Your Name"
-                    {...register('name', { required: true })}
+                    {...register('riderName', { required: true })}
                   />
                 </fieldset>
                 <fieldset className="fieldset w-full">
@@ -96,7 +100,7 @@ const Rider = () => {
                     type="email"
                     className="input w-full border-[#CBD5E1]"
                     placeholder="Your Email"
-                    {...register('email', { required: true })}
+                    {...register('riderEmail', { required: true })}
                   />
                 </fieldset>
                 <fieldset className="fieldset flex gap-4">
@@ -137,7 +141,7 @@ const Rider = () => {
                     type="text"
                     className="input w-full border-[#CBD5E1]"
                     placeholder="NID"
-                    {...register('nid', { required: true })}
+                    {...register('riderNTD', { required: true })}
                   />
                 </fieldset>
                 <fieldset className="fieldset w-full">
@@ -146,7 +150,7 @@ const Rider = () => {
                     type="text"
                     className="input w-full border-[#CBD5E1]"
                     placeholder="Phone Number"
-                    {...register('phoneNumber', { required: true })}
+                    {...register('riderPhoneNumber', { required: true })}
                   />
                 </fieldset>
                 <fieldset className="fieldset w-full">
@@ -177,7 +181,7 @@ const Rider = () => {
                   />
                 </fieldset>
 
-                <button className="btn btn-primary mt-4 text-black w-full">Submit</button>
+                <button className="btn btn-primary mt-4 text-black w-full">Apply as a Rider</button>
               </div>
               <div className="hidden lg:block ">
                 <img src={riderImg} alt="" />
