@@ -48,6 +48,7 @@ const router = createBrowserRouter([
             <Rider />
           </PrivateRouter>
         ),
+        loader: () => fetch('/serviceCenters.json').then((res) => res.json()),
       },
       {
         path: 'about-us',
