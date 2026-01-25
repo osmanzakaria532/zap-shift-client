@@ -59,7 +59,7 @@ const DashboardLayout = () => {
             <div className="border w-10 h-10 rounded-full flex items-center justify-center outline-hidden">
               {user?.photoURL && (
                 <img
-                  src={user.photoURL}
+                  src={user?.photoURL || 'https://i.ibb.co.com/cKMpwWDT/images-1.png'}
                   alt="User Avatar"
                   className="w-10 h-10 rounded-full object-cover"
                 />

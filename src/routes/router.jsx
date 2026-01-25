@@ -8,6 +8,7 @@ import LogIn from '../Pages/Auth/LogIn/LogIn';
 import Register from '../Pages/Auth/Register/Register';
 import CompleteProfile from '../Pages/Auth/SocialLogin/CompleteProfile';
 import Coverage from '../Pages/Coverage/Coverage';
+import ApproveRiders from '../Pages/Dashboard/ApproveRiders/ApproveRiders';
 import DashBoard from '../Pages/Dashboard/DashBoard';
 import MyParcels from '../Pages/Dashboard/MyParcels/MyParcels';
 import Payment from '../Pages/Dashboard/Payment/Payment';
@@ -125,6 +126,10 @@ const router = createBrowserRouter([
       {
         path: 'payment-history',
         Component: PaymentHistory,
+      },
+      {
+        path: 'approve-riders',
+        Component: ApproveRiders,
       },
     ],
   },
