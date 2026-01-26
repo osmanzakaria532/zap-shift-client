@@ -20,7 +20,7 @@ import Home from '../Pages/Home/Home/Home';
 import NotFound from '../Pages/NotFound/NotFound';
 import Rider from '../Pages/Rider/Rider';
 import SendParcel from '../Pages/SendParcel/SendParcel';
-import Settings from '../Pages/Settings/settings';
+import Settings from '../Pages/Settings/Settings';
 import PrivateRouter from './PrivateRouter';
 
 const router = createBrowserRouter([
