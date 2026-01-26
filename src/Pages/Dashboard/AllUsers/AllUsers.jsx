@@ -1,18 +1,75 @@
 import { useQuery } from '@tanstack/react-query';
 import { AiFillDelete } from 'react-icons/ai';
+import { FaUserShield } from 'react-icons/fa';
+import { FiShieldOff } from 'react-icons/fi';
 import Swal from 'sweetalert2';
+import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
+  const { user: loggedInUserEmail } = useAuth();
 
   const { data: users = [], refetch } = useQuery({
-    queryKey: ['riders'],
+    queryKey: ['users'],
     queryFn: async () => {
       const res = await axiosSecure.get('/users');
       return res.data;
     },
   });
+  const handleMakeAdmin = (user) => {
+    const roleInfo = { role: 'admin' };
+    const email = loggedInUserEmail; // যেই user currently login আছে
+    axiosSecure.patch(`/users-role/${user._id}`, { roleInfo, email }).then((res) => {
+      if (res.data.modifiedCount) {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: `${user.displayName} Mared As an Admin ? `,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, make admin!',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: 'maked Admin successfully!',
+              text: '',
+              icon: 'success',
+            });
+          }
+        });
+        refetch();
+      }
+    });
+  };
+
+  const handleRemoveAdmin = (user) => {
+    const roleInfo = { role: 'user' };
+    const email = loggedInUserEmail; // যেই user currently login আছে
+    axiosSecure.patch(`/users-role/${user._id}`, { roleInfo, email }).then((res) => {
+      if (res.data.modifiedCount) {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: `Removed ${user.displayName}  From Admin successfully`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, Remove from admin!',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: 'Removed from Admin successfully!',
+              text: '',
+              icon: 'success',
+            });
+          }
+        });
+        refetch();
+      }
+    });
+  };
 
   const handleDeleteation = (user) => {
     // delete logic here
@@ -45,7 +102,8 @@ const AllUsers = () => {
               <th>Region</th>
               <th>District</th>
               <th>User CreatedAt</th>
-              <th>Action</th>
+              <th>Admin Action</th>
+              <th>Others Action</th>
             </tr>
           </thead>
 
@@ -85,9 +143,28 @@ const AllUsers = () => {
                 </td>
 
                 <td className="space-x-2.5">
+                  {!user.isPermanentAdmin &&
+                    (user.role === 'admin' ? (
+                      <button
+                        onClick={() => handleRemoveAdmin(user)}
+                        className="btn btn-sm bg-red-800 text-white hover:bg-primary hover:text-black text-xs"
+                      >
+                        <FiShieldOff />
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleMakeAdmin(user)}
+                        className="btn btn-sm bg-green-800 text-white hover:bg-primary hover:text-black text-xs"
+                      >
+                        <FaUserShield />
+                      </button>
+                    ))}
+                </td>
+
+                <td className="space-x-2.5">
                   <button
                     onClick={() => handleDeleteation(user)}
-                    className="btn btn-sm hover:bg-primary text-xs"
+                    className="btn btn-sm bg-red-600 text-white hover:bg-primary hover:text-black text-xs"
                   >
                     <AiFillDelete />
                   </button>
