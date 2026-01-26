@@ -100,7 +100,7 @@ const Rider = () => {
                     type="email"
                     className="input w-full border-[#CBD5E1]"
                     placeholder="Your Email"
-                    {...register('riderEmail', { required: true })}
+                    {...register('email', { required: true })}
                   />
                 </fieldset>
                 <fieldset className="fieldset flex gap-4">

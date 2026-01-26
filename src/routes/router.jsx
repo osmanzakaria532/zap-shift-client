@@ -8,6 +8,7 @@ import LogIn from '../Pages/Auth/LogIn/LogIn';
 import Register from '../Pages/Auth/Register/Register';
 import CompleteProfile from '../Pages/Auth/SocialLogin/CompleteProfile';
 import Coverage from '../Pages/Coverage/Coverage';
+import AllUsers from '../Pages/Dashboard/AllUsers/AllUsers';
 import ApproveRiders from '../Pages/Dashboard/ApproveRiders/ApproveRiders';
 import DashBoard from '../Pages/Dashboard/DashBoard';
 import MyParcels from '../Pages/Dashboard/MyParcels/MyParcels';
@@ -19,6 +20,7 @@ import Home from '../Pages/Home/Home/Home';
 import NotFound from '../Pages/NotFound/NotFound';
 import Rider from '../Pages/Rider/Rider';
 import SendParcel from '../Pages/SendParcel/SendParcel';
+import Settings from '../Pages/Settings/settings';
 import PrivateRouter from './PrivateRouter';
 
 const router = createBrowserRouter([
@@ -130,6 +132,14 @@ const router = createBrowserRouter([
       {
         path: 'approve-riders',
         Component: ApproveRiders,
+      },
+      {
+        path: 'all-users',
+        Component: AllUsers,
+      },
+      {
+        path: 'settings',
+        Component: Settings,
       },
     ],
   },

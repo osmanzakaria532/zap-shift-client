@@ -7,13 +7,18 @@ const PaymentHistory = () => {
   const queryClient = useQueryClient();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const { data: payments = [] } = useQuery({
+  const { data: payments = [], refetch } = useQuery({
     queryKey: ['payments', user?.email],
+    enabled: !!user?.email,
     queryFn: async () => {
       const res = await axiosSecure.get(`/payments?email=${user.email}`);
       return res.data;
     },
   });
+
+  console.log('user:', user);
+  console.log('email:', user?.email);
+  console.log('payments:', payments);
 
   const handlePaymentDetails = (parcelId) => {
     console.log(parcelId);
@@ -21,7 +26,6 @@ const PaymentHistory = () => {
 
   const handleTransactionDelete = (parcelId) => {
     console.log(parcelId);
-
     let timerInterval;
     Swal.fire({
       title: 'Deleting transaction...',
@@ -51,7 +55,7 @@ const PaymentHistory = () => {
             timer: 1500,
             showConfirmButton: false,
           });
-
+          refetch();
           queryClient.invalidateQueries(['payments']);
         }
       }
