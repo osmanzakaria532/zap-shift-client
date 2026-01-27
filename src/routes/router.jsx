@@ -12,6 +12,7 @@ import AllUsers from '../Pages/Dashboard/AllUsers/AllUsers';
 import ApproveRiders from '../Pages/Dashboard/ApproveRiders/ApproveRiders';
 import DashBoard from '../Pages/Dashboard/DashBoard';
 import MyParcels from '../Pages/Dashboard/MyParcels/MyParcels';
+import MyProfile from '../Pages/Dashboard/MyProfile/MyProfile';
 import Payment from '../Pages/Dashboard/Payment/Payment';
 import PaymentCancel from '../Pages/Dashboard/Payment/PaymentCancel/PaymentCancel';
 import PaymentHistory from '../Pages/Dashboard/Payment/PaymentHistory/PaymentHistory';
@@ -21,8 +22,8 @@ import NotFound from '../Pages/NotFound/NotFound';
 import Rider from '../Pages/Rider/Rider';
 import SendParcel from '../Pages/SendParcel/SendParcel';
 import Settings from '../Pages/Settings/Settings';
+import AdminRouter from './AdminRouter';
 import PrivateRouter from './PrivateRouter';
-import MyProfile from '../Pages/Dashboard/MyProfile/MyProfile';
 
 const router = createBrowserRouter([
   // RootLayout
@@ -132,11 +133,19 @@ const router = createBrowserRouter([
       },
       {
         path: 'approve-riders',
-        Component: ApproveRiders,
+        element: (
+          <AdminRouter>
+            <ApproveRiders />
+          </AdminRouter>
+        ),
       },
       {
         path: 'all-users',
-        Component: AllUsers,
+        element: (
+          <AdminRouter>
+            <AllUsers />
+          </AdminRouter>
+        ),
       },
       {
         path: 'my-profile',
