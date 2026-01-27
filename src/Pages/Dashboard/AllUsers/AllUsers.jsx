@@ -1,8 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import { AiFillDelete } from 'react-icons/ai';
 import { FaUserShield } from 'react-icons/fa';
 import { FiShieldOff } from 'react-icons/fi';
 import Swal from 'sweetalert2';
+import Search from '../../../Components/Search';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
@@ -10,18 +12,12 @@ const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
   const { user: loggedInUserEmail } = useAuth();
 
-  // const { data: role = 'user', isLoading } = useQuery({
-  //   queryKey: ['user-role', loggedInUserEmail?.email],
-  //   queryFn: async () => {
-  //     const res = await axiosSecure.get(`/users/${loggedInUserEmail?.email}/role`);
-  //     return res.data;
-  //   },
-  // });
+  const [searchText, setSearchText] = useState('');
 
   const { data: users = [], refetch } = useQuery({
-    queryKey: ['user'],
+    queryKey: ['users', searchText],
     queryFn: async () => {
-      const res = await axiosSecure.get('/users');
+      const res = await axiosSecure.get(`/users?search=${searchText}`);
       return res.data;
     },
   });
@@ -103,13 +99,18 @@ const AllUsers = () => {
 
   return (
     <div>
-      {/* <h2>Riders Pending Approval: {riders.length}</h2> */}
+      <div className="flex justify-between items-center mb-4 px-2">
+        <h2 className="text-3xl">All Users: {users?.length}</h2>
+        <p>{searchText}</p>
+        <Search placeholder="Search Users" onSearch={setSearchText} />
+      </div>
       <div className="overflow-x-auto">
         <table className="table table-zebra">
           {/* head */}
           <thead>
             <tr>
               <th>Number</th>
+              <th>User Photo</th>
               <th>User Name</th>
               <th>User Role</th>
               <th>User Email</th>
@@ -141,6 +142,7 @@ const AllUsers = () => {
                     </div>
                   </div>
                 </td>
+                <td>{user.displayName}</td>
                 <td>{user.role}</td>
                 <td>{user.email}</td>
                 <td>{user.region}</td>
