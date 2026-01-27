@@ -141,11 +141,12 @@ const router = createBrowserRouter([
       },
       {
         path: 'all-users',
-        element: (
-          <AdminRouter>
-            <AllUsers />
-          </AdminRouter>
-        ),
+        // element: (
+        //   <AdminRouter>
+        //     <AllUsers />
+        //   </AdminRouter>
+        // ),
+        Component: AllUsers,
       },
       {
         path: 'my-profile',

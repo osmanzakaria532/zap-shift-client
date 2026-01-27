@@ -30,6 +30,8 @@ const NavItem = ({ to, icon: Icon, label }) => {
 const DashboardLayout = () => {
   const { user, logOut } = useAuth();
   const { role } = useRole();
+  // console.log('in the dashboard layout', role);
+
   const [show, setShow] = useState(false);
 
   // console.log('in the dashboard', role);
