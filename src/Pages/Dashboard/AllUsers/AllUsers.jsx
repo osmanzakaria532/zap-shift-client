@@ -10,8 +10,16 @@ const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
   const { user: loggedInUserEmail } = useAuth();
 
+  // const { data: role = 'user', isLoading } = useQuery({
+  //   queryKey: ['user-role', loggedInUserEmail?.email],
+  //   queryFn: async () => {
+  //     const res = await axiosSecure.get(`/users/${loggedInUserEmail?.email}/role`);
+  //     return res.data;
+  //   },
+  // });
+
   const { data: users = [], refetch } = useQuery({
-    queryKey: ['users'],
+    queryKey: ['user'],
     queryFn: async () => {
       const res = await axiosSecure.get('/users');
       return res.data;
@@ -19,27 +27,33 @@ const AllUsers = () => {
   });
   const handleMakeAdmin = (user) => {
     const roleInfo = { role: 'admin' };
-    const email = loggedInUserEmail; // যেই user currently login আছে
-    axiosSecure.patch(`/users-role/${user._id}`, { roleInfo, email }).then((res) => {
-      if (res.data.modifiedCount) {
-        Swal.fire({
-          title: 'Are you sure?',
-          text: `${user.displayName} Mared As an Admin ? `,
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, make admin!',
-        }).then((result) => {
-          if (result.isConfirmed) {
+    const email = loggedInUserEmail;
+
+    // ✅ FIX 1: API call এর আগে confirmation নেওয়া হচ্ছে
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `${user.displayName} will be made an admin`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, make admin!',
+    }).then((result) => {
+      // ✅ FIX 2: user confirm করলে তবেই নিচের কোড চলবে
+      if (result.isConfirmed) {
+        // ✅ FIX 3: confirmation এর ভিতরে API call রাখা হয়েছে
+        axiosSecure.patch(`/users-role/${user._id}`, { roleInfo, email }).then((res) => {
+          // ✅ FIX 4: database update সফল হলে success alert দেখানো হচ্ছে
+          if (res.data.modifiedCount) {
             Swal.fire({
-              title: 'maked Admin successfully!',
-              text: '',
+              title: 'Admin made successfully!',
               icon: 'success',
             });
+
+            // ✅ FIX 5: role change এর পরে data আবার fetch করা হচ্ছে
+            refetch();
           }
         });
-        refetch();
       }
     });
   };

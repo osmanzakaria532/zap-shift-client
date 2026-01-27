@@ -22,6 +22,7 @@ import Rider from '../Pages/Rider/Rider';
 import SendParcel from '../Pages/SendParcel/SendParcel';
 import Settings from '../Pages/Settings/Settings';
 import PrivateRouter from './PrivateRouter';
+import MyProfile from '../Pages/Dashboard/MyProfile/MyProfile';
 
 const router = createBrowserRouter([
   // RootLayout
@@ -136,6 +137,10 @@ const router = createBrowserRouter([
       {
         path: 'all-users',
         Component: AllUsers,
+      },
+      {
+        path: 'my-profile',
+        Component: MyProfile,
       },
       {
         path: 'settings',

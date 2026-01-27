@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { useState } from 'react';
 import { BsBox, BsBoxes } from 'react-icons/bs';
 import { FaHistory, FaUsers } from 'react-icons/fa';
 import { GiScooter } from 'react-icons/gi';
@@ -6,6 +7,7 @@ import { IoIosArrowDown, IoIosNotificationsOutline } from 'react-icons/io';
 import { MdDeliveryDining, MdElectricBike, MdOutlineAssignment } from 'react-icons/md';
 import { Link, NavLink, Outlet } from 'react-router';
 import useAuth from '../hooks/useAuth';
+import useRole from '../hooks/useRole';
 // import useRole from '../hooks/useRole';
 
 const NavItem = ({ to, icon: Icon, label }) => {
@@ -26,11 +28,22 @@ const NavItem = ({ to, icon: Icon, label }) => {
 };
 
 const DashboardLayout = () => {
-  const { user } = useAuth();
-  // const { role } = useRole();
+  const { user, logOut } = useAuth();
+  const { role } = useRole();
+  const [show, setShow] = useState(false);
 
   // console.log('in the dashboard', role);
   // console.log(user);
+
+  const handleSignOut = () => {
+    logOut()
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div className="drawer lg:drawer-open">
@@ -56,24 +69,43 @@ const DashboardLayout = () => {
             <div className="border w-10 h-10 rounded-full flex items-center justify-center">
               <IoIosNotificationsOutline className="text-3xl" />
             </div>
-            <div className="border w-10 h-10 rounded-full flex items-center justify-center outline-hidden">
-              {user?.photoURL && (
-                <img
-                  src={user?.photoURL || 'https://i.ibb.co.com/cKMpwWDT/images-1.png'}
-                  alt="User Avatar"
-                  className="w-10 h-10 rounded-full object-cover"
-                />
-              )}
-            </div>
-            <div>
-              {/* <h2>
+
+            <div className="flex items-center gap-2 relative">
+              <div
+                className="border w-10 h-10 rounded-full flex items-center justify-center outline-hidden cursor-pointer"
+                onClick={() => setShow(!show)}
+              >
+                {user?.photoURL && (
+                  <img
+                    src={user?.photoURL || 'https://i.ibb.co.com/cKMpwWDT/images-1.png'}
+                    alt="User Avatar"
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                )}
+              </div>
+              <div className="relative">
+                {/* <h2>
                 {user?.displayName
                   ? user.displayName.split(' ').slice(0, 2).join(' ') +
                     (user.displayName.split(' ').length > 2 ? ' ...' : '')
                   : 'User Name'}
               </h2> */}
-              <h2>{user?.displayName ? user?.displayName.slice(0, 14) : 'User Name'}</h2>
-              <h6></h6>
+                <h2>{user?.displayName ? user?.displayName.slice(0, 14) : 'User Name'}</h2>
+              </div>
+              {show && (
+                <div className="w-42 absolute top-9 right-0 mt-3 bg-white px-2 py-2 space-y-1.5 flex flex-col justify-end items-end text-center">
+                  <div className="w-full">
+                    <Link to="/dashboard/my-profile" className="py-2 px-3 block bg-gray-400/10">
+                      My Profile
+                    </Link>
+                  </div>
+                  <div className="w-full">
+                    <button onClick={handleSignOut} className="btn px-3 w-full">
+                      Sign Out
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
             <div>
               <IoIosArrowDown />
@@ -121,133 +153,75 @@ const DashboardLayout = () => {
             {/* Dash */}
 
             {/* All parcels */}
-            {/* {role === 'admin' && <></>} */}
+            {role === 'admin' && (
+              <>
+                <li>
+                  <NavItem to="/dashboard/all-parcels" icon={BsBoxes} label="All Parcels" />
+                </li>
+              </>
+            )}
 
-            <li>
-              <NavItem to="/dashboard/all-parcels" icon={BsBoxes} label="All Parcels" />
-            </li>
             <li>
               <NavItem to="/dashboard/my-parcels" icon={BsBox} label="My Parcels" />
             </li>
 
             {/* Paymeny History */}
             <li>
-              <NavLink
-                to="/dashboard/payment-history"
-                className={({ isActive }) =>
-                  `${
-                    isActive ? 'text-black bg-primary' : 'text-black'
-                  } is-drawer-close:tooltip is-drawer-close:tooltip-right`
-                }
-                data-tip="Payment History"
-              >
-                <FaHistory className="inline-block" />
-                <span className="is-drawer-close:hidden">Payment History</span>
-              </NavLink>
+              <NavItem to="/dashboard/payment-history" icon={FaHistory} label="Payment History" />
             </li>
 
             {/* admin route only */}
-            {/* {role === 'admin' && <></>} */}
-            {/* Approve Riders */}
-            <li>
-              <NavLink
-                to="/dashboard/approve-riders"
-                className={({ isActive }) =>
-                  `${
-                    isActive ? 'text-black bg-primary' : 'text-black'
-                  } is-drawer-close:tooltip is-drawer-close:tooltip-right`
-                }
-                data-tip="Approve Riders"
-              >
-                <MdElectricBike className="inline-block" />
-                <span className="is-drawer-close:hidden">Approve Riders</span>
-              </NavLink>
-            </li>
+            {role === 'admin' && (
+              <>
+                <li>
+                  <NavItem
+                    to="/dashboard/approve-riders"
+                    icon={MdElectricBike}
+                    label="Approve Riders"
+                  />
+                </li>
+              </>
+            )}
 
             {/* All Riders */}
-            <li>
-              <NavLink
-                to="/dashboard/all-riders"
-                className={({ isActive }) =>
-                  `${
-                    isActive ? 'text-black bg-primary' : 'text-black'
-                  } is-drawer-close:tooltip is-drawer-close:tooltip-right`
-                }
-                data-tip="All Riders"
-              >
-                <GiScooter className="inline-block" />
-                <span className="is-drawer-close:hidden">All Riders</span>
-              </NavLink>
-            </li>
+            {role === 'admin' && (
+              <li>
+                <NavItem to="/dashboard/all-riders" icon={GiScooter} label="All Riders" />
+              </li>
+            )}
 
             {/* Assign Riders */}
-            <li>
-              <NavLink
-                to="/dashboard/assign-riders"
-                className={({ isActive }) =>
-                  `${
-                    isActive ? 'text-black bg-primary' : 'text-black'
-                  } is-drawer-close:tooltip is-drawer-close:tooltip-right`
-                }
-                data-tip="Assign Riders"
-              >
-                <MdOutlineAssignment className="inline-block" />
-                <span className="is-drawer-close:hidden">Assign Riders</span>
-              </NavLink>
-            </li>
+            {role === 'admin' && (
+              <li>
+                <NavItem
+                  to="/dashboard/assign-riders"
+                  icon={MdOutlineAssignment}
+                  label="Assign Riders"
+                />
+              </li>
+            )}
 
-            {/* {role === 'rider' && <></>} */}
-            <li>
-              <NavLink
-                to="/dashboard/assigned-delivereis"
-                className={({ isActive }) =>
-                  `${
-                    isActive ? 'text-black bg-primary' : 'text-black'
-                  } is-drawer-close:tooltip is-drawer-close:tooltip-right`
-                }
-                data-tip="Assigned Delivereis"
-              >
-                <MdDeliveryDining className="inline-block" />
-                <span className="is-drawer-close:hidden">Assigned Delivereis</span>
-              </NavLink>
-            </li>
+            {role === 'rider' && <></>}
 
             {/* {role === 'admin' && <></>} */}
             {/* Users  */}
-            <li>
-              <NavLink
-                to="/dashboard/all-users"
-                className={({ isActive }) =>
-                  `${
-                    isActive ? 'text-black bg-primary' : 'text-black'
-                  } is-drawer-close:tooltip is-drawer-close:tooltip-right`
-                }
-                data-tip="Users "
-              >
-                <FaUsers className="inline-block" />
-                <span className="is-drawer-close:hidden">Users</span>
-              </NavLink>
-            </li>
+            {role === 'admin' && (
+              <li>
+                <NavItem to="/dashboard/all-users" icon={FaUsers} label="All Users" />
+              </li>
+            )}
 
-            {/* Rider Route */}
-            {/* {role === 'rider' && (
+            {role === 'rider' && (
               <>
                 <li>
-                  <NavLink
+                  <NavItem
                     to="/dashboard/assigned-delivereis"
-                    className={({ isActive }) =>
-                      `${
-                        isActive ? 'text-black bg-primary' : 'text-black'
-                      } is-drawer-close:tooltip is-drawer-close:tooltip-right`
-                    }
-                    data-tip="Assigned Delivereis"
-                  >
-                    <MdDeliveryDining className="inline-block" />
-                    <span className="is-drawer-close:hidden">Assigned Delivereis</span>
-                  </NavLink>
+                    icon={MdDeliveryDining}
+                    label="Assigned Delivereis"
+                  />
                 </li>
               </>
-            )} */}
+            )}
 
             {/* List item */}
             <li>
