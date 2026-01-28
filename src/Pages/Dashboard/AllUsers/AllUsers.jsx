@@ -142,8 +142,8 @@ const AllUsers = () => {
                     </div>
                   </div>
                 </td>
-                <td>{user.displayName}</td>
-                <td>{user.role}</td>
+                <td className="capitalize">{user.displayName}</td>
+                <td className="capitalize">{user.role}</td>
                 <td>{user.email}</td>
                 <td>{user.region}</td>
                 <td>{user.district}</td>

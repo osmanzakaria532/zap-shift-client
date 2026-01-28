@@ -8,15 +8,18 @@ import LogIn from '../Pages/Auth/LogIn/LogIn';
 import Register from '../Pages/Auth/Register/Register';
 import CompleteProfile from '../Pages/Auth/SocialLogin/CompleteProfile';
 import Coverage from '../Pages/Coverage/Coverage';
+import AllParcels from '../Pages/Dashboard/AllParcels/AllParcels';
 import AllUsers from '../Pages/Dashboard/AllUsers/AllUsers';
 import ApproveRiders from '../Pages/Dashboard/ApproveRiders/ApproveRiders';
+import AssignRiders from '../Pages/Dashboard/AssignRiders/AssignRiders';
 import DashBoard from '../Pages/Dashboard/DashBoard';
 import MyParcels from '../Pages/Dashboard/MyParcels/MyParcels';
-import MyProfile from '../Pages/Dashboard/MyProfile/MyProfile';
 import Payment from '../Pages/Dashboard/Payment/Payment';
 import PaymentCancel from '../Pages/Dashboard/Payment/PaymentCancel/PaymentCancel';
 import PaymentHistory from '../Pages/Dashboard/Payment/PaymentHistory/PaymentHistory';
 import PaymentSuccess from '../Pages/Dashboard/Payment/PaymentSuccess/PaymentSuccess';
+import Edits from '../Pages/Dashboard/Profile/Edits/Edits';
+import Profile from '../Pages/Dashboard/Profile/Profile';
 import Home from '../Pages/Home/Home/Home';
 import NotFound from '../Pages/NotFound/NotFound';
 import Rider from '../Pages/Rider/Rider';
@@ -157,8 +160,31 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'my-profile',
-        Component: MyProfile,
+        path: 'all-parcels',
+        element: (
+          <AdminRouter>
+            <AllParcels />
+          </AdminRouter>
+        ),
+      },
+      {
+        path: 'assign-riders',
+        element: (
+          <AdminRouter>
+            <AssignRiders />
+          </AdminRouter>
+        ),
+      },
+      {
+        path: 'profile',
+        element: <Profile />,
+        children: [
+          {
+            path: 'edit',
+            element: <Edits />,
+            // element: <p>Edit</p>
+          },
+        ],
       },
       {
         path: 'settings',

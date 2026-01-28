@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import Container from '../../Components/Container';
 import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import useRole from '../../hooks/useRole';
 
 const SendParcel = () => {
   const { register, handleSubmit, control, reset } = useForm();
@@ -13,6 +14,7 @@ const SendParcel = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { role } = useRole();
 
   const regions = [...new Set(regionsDuplicate)];
   const districtsByRegion = (region) => {
@@ -24,10 +26,11 @@ const SendParcel = () => {
   };
   const senderRegion = useWatch({ control, name: 'senderRegion' });
   const receiverRegion = useWatch({ control, name: 'receiverRegion' });
-
   // const navigate = useNavigate();
 
   const handleSendParcel = (data) => {
+    // console.log(data);
+
     const isDocument = data.parcelType === 'document';
     const parcelWeight = parseFloat(data.parcelWeight);
     const isSameDistrict = data.senderDistrict === data.receiverDistrict;
@@ -58,7 +61,13 @@ const SendParcel = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         // save the parcel to thae database
-        axiosSecure.post('/parcels', data).then((res) => {
+        const parcelData = {
+          ...data,
+          paymentStatus: 'to-pay',
+          deliveryStatus: 'Unpaid',
+          senderPhoto: user?.photoURL,
+        };
+        axiosSecure.post('/parcels', parcelData).then((res) => {
           // console.log('after saning parcel in database', res.data);
           if (res.data.insertedId) {
             navigate('/dashboard/my-parcels');
@@ -74,43 +83,6 @@ const SendParcel = () => {
       }
     });
   };
-
-  // const handleSendParcel = (data) => {
-  // console.log('Parcel data', data);
-  // check if parcel is document or non-document
-  // parse parcel weight to float
-  // check if sender and receiver district are same
-  //   console.log('Total cost:', cost);
-  //   data.cost = cost;
-  //   Swal.fire({
-  //     title: 'aggree with the cost?',
-  //     text: `You will be charged! ${cost} BDT`,
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonColor: '#3085d6',
-  //     cancelButtonColor: '#d33',
-  //     confirmButtonText: 'Confirm and Contiue Payment!',
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  // post parcel data to server
-  //       axiosSecure.post('/parcels', data).then((res) => {
-  //         console.log('after saving data', res.data);
-
-  //         if (res.data.insertedId) {
-  //           navigate('/dashboard/my-parcels');
-  //           Swal.fire({
-  //             position: 'top-end',
-  //             icon: 'success',
-  //             title: 'Your work has been saved',
-  //             showConfirmButton: false,
-  //             timer: 1500,
-  //           });
-  //         }
-  //       });
-  //       reset();
-  //     }
-  //   });
-  // };
 
   return (
     <div className="py-10 md:py-20">
@@ -185,6 +157,7 @@ const SendParcel = () => {
                       className="input w-full"
                       placeholder="Sender Name"
                       defaultValue={user?.displayName}
+                      readOnly={role !== 'admin'}
                       {...register('senderName')}
                     />
                   </fieldset>
@@ -194,8 +167,8 @@ const SendParcel = () => {
                     <input
                       type="email"
                       className="input w-full"
-                      placeholder="Sender Email"
                       defaultValue={user?.email}
+                      readOnly={role !== 'admin'}
                       {...register('senderEmail')}
                     />
                   </fieldset>

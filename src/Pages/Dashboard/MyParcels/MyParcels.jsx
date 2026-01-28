@@ -5,28 +5,32 @@ import { MdDeleteSweep } from 'react-icons/md';
 import Swal from 'sweetalert2';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import useRole from '../../../hooks/useRole';
 
 const MyParcels = () => {
-  // const { role } = useRole();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const { role } = useRole();
 
   // useQuery to fetch parcels data
   const { data: parcels = [], refetch } = useQuery({
     queryKey: ['myParcels', user?.email],
+    enabled: !!user?.email,
     // enabled: !!user?.email && !!role, // role & email available na thakle fetch hobe na
+
     queryFn: async () => {
-      // if (!user?.email || !role) return [];
       const res = await axiosSecure.get(`/parcels?email=${user?.email}`);
       return res.data;
     },
   });
+  // console.log('USER EMAIL:', user?.email);
+  console.log('My Parcels', parcels);
 
   // console.log('in my parcel ', parcels);
 
   // Handle delete parcel
   const handleParcelDelete = (parcelId) => {
-    console.log('Delete parcel with ID:', parcelId);
+    // console.log('Delete parcel with ID:', parcelId);
 
     // Implement delete functionality here
     // Confirmation dialog
@@ -41,7 +45,7 @@ const MyParcels = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure.delete(`/parcels/${parcelId}`).then((res) => {
-          console.log('deleted parcel', res.data);
+          // console.log('deleted parcel', res.data);
           if (res.data.deletedCount) {
             Swal.fire({
               title: 'Deleted!',
@@ -58,13 +62,14 @@ const MyParcels = () => {
 
   // handle pament
   const handlePayment = async (parcel) => {
-    console.log(parcel);
+    // console.log(parcel);
 
     const paymentInfo = {
       cost: parcel.cost,
       parcelId: parcel._id,
       senderEmail: parcel.senderEmail,
       parcelName: parcel.parcelName,
+      frontendUrl: window.location.origin, // ekhane dynamic frontend URL pathacchi
     };
 
     const res = await axiosSecure.post('/payment-checkout-session', paymentInfo);
@@ -79,13 +84,16 @@ const MyParcels = () => {
           {/* head */}
           <thead>
             <tr>
-              <th>Number</th>
-              <th>Name</th>
-              <th>Email</th>
+              <th>SL</th>
+              <th>Profile Info</th>
+              <th>Parcel name</th>
               <th>Cost</th>
               <th>Type</th>
               <th>Weight</th>
-              <th>Payment</th>
+              <th>Tracking ID</th>
+              <th>Receiver Region</th>
+              <th>Receiver District</th>
+              <th>Payment Status</th>
               <th>Delivary Status</th>
               <th>Action</th>
             </tr>
@@ -95,11 +103,29 @@ const MyParcels = () => {
             {parcels.map((parcel, index) => (
               <tr key={index}>
                 <th>{index + 1}</th>
+                <td>
+                  <div className="flex items-center gap-3">
+                    <div className="avatar">
+                      <div className="mask mask-squircle h-12 w-12 rounded-full">
+                        <img src={parcel.senderPhoto} alt="Avatar Tailwind CSS Component" />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="font-bold capitalize">{parcel.senderName}</div>
+                      <div className="text-sm opacity-50">
+                        <span>{parcel.senderRegion}</span>, <span>{parcel.senderDistrict}</span>
+                      </div>
+                      <div className="text-xs">{parcel.senderEmail}</div>
+                    </div>
+                  </div>
+                </td>
                 <td>{parcel.parcelName}</td>
-                <td>{parcel.senderEmail}</td>
                 <td>{parcel.cost}</td>
                 <td>{parcel.parcelType}</td>
                 <td>{parcel.parcelWeight}</td>
+                <td>{parcel.trackingId}</td>
+                <td>{parcel.receiverRegion}</td>
+                <td>{parcel.receiverDistrict}</td>
                 <td>
                   {parcel.paymentStatus === 'paid' ? (
                     <span className="text-black btn btn-sm px-6 btn-square bg-green-400 btn-disabled">
@@ -122,7 +148,11 @@ const MyParcels = () => {
                     </>
                   )}
                 </td>
-                <td>{parcel?.deliveryStatus}</td>
+                <td className="capitalize font-semibold">
+                  <span className="bg-yellow-200 px-3 py-3 rounded-lg text-green-900">
+                    {parcel?.deliveryStatus?.replace('-', ' ')?.trim()}
+                  </span>
+                </td>
 
                 <td className="space-x-2.5">
                   <button className="btn btn-sm btn-square hover:bg-primary">
@@ -131,12 +161,14 @@ const MyParcels = () => {
                   <button className="btn btn-sm btn-square hover:bg-primary">
                     <FaRegEdit />
                   </button>
-                  <button
-                    onClick={() => handleParcelDelete(parcel._id)}
-                    className="btn btn-sm btn-square hover:bg-primary"
-                  >
-                    <MdDeleteSweep />
-                  </button>
+                  {role === 'admin' && (
+                    <button
+                      onClick={() => handleParcelDelete(parcel._id)}
+                      className="btn btn-sm btn-square hover:bg-primary"
+                    >
+                      <MdDeleteSweep />
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}

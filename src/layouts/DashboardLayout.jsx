@@ -8,6 +8,7 @@ import { MdDeliveryDining, MdElectricBike, MdOutlineAssignment } from 'react-ico
 import { Link, NavLink, Outlet } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import useRole from '../hooks/useRole';
+import UseUserInfo from '../hooks/useUserInfo';
 // import useRole from '../hooks/useRole';
 
 const NavItem = ({ to, icon: Icon, label }) => {
@@ -62,9 +63,9 @@ const DashboardLayout = () => {
             </li>
           </ul>
 
-          <p>
-            {user?.email} : <span className="capitalize"></span>
-          </p>
+          <div>
+            <UseUserInfo />
+          </div>
 
           {/* Right Side */}
           <div className="px-4 flex items-center gap-3">
@@ -72,45 +73,45 @@ const DashboardLayout = () => {
               <IoIosNotificationsOutline className="text-3xl" />
             </div>
 
-            <div className="flex items-center gap-2 relative">
-              <div
-                className="border w-10 h-10 rounded-full flex items-center justify-center outline-hidden cursor-pointer"
-                onClick={() => setShow(!show)}
-              >
-                {user?.photoURL && (
-                  <img
-                    src={user?.photoURL || 'https://i.ibb.co.com/cKMpwWDT/images-1.png'}
-                    alt="User Avatar"
-                    className="w-10 h-10 rounded-full object-cover"
-                  />
+            <div className="flex items-center gap-2 cursor-pointer " onClick={() => setShow(!show)}>
+              <div className="flex items-center gap-2  relative">
+                <div className="border w-10 h-10 rounded-full flex items-center justify-center outline-hidden ">
+                  {user?.photoURL && (
+                    <img
+                      src={user?.photoURL || 'https://i.ibb.co.com/cKMpwWDT/images-1.png'}
+                      alt="User Avatar"
+                      className="w-10 h-10 rounded-full object-cover"
+                    />
+                  )}
+                </div>
+                <div className="relative">
+                  {/* <h2>
+                    {user?.displayName
+                      ? user.displayName.split(' ').slice(0, 2).join(' ') +
+                        (user.displayName.split(' ').length > 2 ? ' ...' : '')
+                      : 'User Name'}
+                  </h2> */}
+                  <h2>{user?.displayName ? user?.displayName.slice(0, 14) : 'User Name'}</h2>
+                  <p>{role}</p>
+                </div>
+                {show && (
+                  <div className="w-52 absolute top-10 -right-12 mt-3 bg-white px-2 py-2 space-y-1.5 flex flex-col justify-end items-end text-center">
+                    <div className="w-full">
+                      <Link to="/dashboard/profile" className="py-2 px-3 block bg-gray-400/10">
+                        Profile
+                      </Link>
+                    </div>
+                    <div className="w-full">
+                      <button onClick={handleSignOut} className="btn px-3 w-full">
+                        Sign Out
+                      </button>
+                    </div>
+                  </div>
                 )}
               </div>
-              <div className="relative">
-                {/* <h2>
-                {user?.displayName
-                  ? user.displayName.split(' ').slice(0, 2).join(' ') +
-                    (user.displayName.split(' ').length > 2 ? ' ...' : '')
-                  : 'User Name'}
-              </h2> */}
-                <h2>{user?.displayName ? user?.displayName.slice(0, 14) : 'User Name'}</h2>
+              <div>
+                <IoIosArrowDown />
               </div>
-              {show && (
-                <div className="w-42 absolute top-9 right-0 mt-3 bg-white px-2 py-2 space-y-1.5 flex flex-col justify-end items-end text-center">
-                  <div className="w-full">
-                    <Link to="/dashboard/my-profile" className="py-2 px-3 block bg-gray-400/10">
-                      My Profile
-                    </Link>
-                  </div>
-                  <div className="w-full">
-                    <button onClick={handleSignOut} className="btn px-3 w-full">
-                      Sign Out
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-            <div>
-              <IoIosArrowDown />
             </div>
           </div>
         </nav>

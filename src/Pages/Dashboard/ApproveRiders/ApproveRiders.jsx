@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useQuery } from '@tanstack/react-query';
 import { AiFillDelete } from 'react-icons/ai';
 import { BsPersonCheckFill } from 'react-icons/bs';
@@ -25,6 +26,12 @@ const ApproveRiders = () => {
       return res.data;
     },
   });
+
+  const totalRequests = riders.length;
+  const totalApproved = riders.filter((r) => r.status === 'approved').length;
+  const totalPending = riders.filter((r) => r.status === 'pending').length;
+  const totalRejected = riders.filter((r) => r.status === 'rejected').length;
+
   const { data: users = [], refetch: refetchUsers } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
@@ -33,7 +40,7 @@ const ApproveRiders = () => {
       return res.data;
     },
   });
-  console.log(users);
+  // console.log(users);
 
   if (isLoading) {
     return <Loading />;
@@ -81,7 +88,18 @@ const ApproveRiders = () => {
 
   return (
     <div>
-      <h2>Riders Pending Approval: {riders.length}</h2>
+      <div className="flex gap-6 mb-4 font-semibold text-xl">
+        <div className="">
+          Total Requests: <span>{totalRequests}</span>
+        </div>
+        <div className="text-green-600">
+          Approved: <span>{totalApproved}</span>
+        </div>
+        <div className="text-yellow-600">Pending: {totalPending}</div>
+        <div className="text-red-600">
+          Rejected: <span>{totalRejected}</span>
+        </div>
+      </div>
       <div className="overflow-x-auto">
         <table className="table table-zebra">
           {/* head */}
@@ -112,7 +130,9 @@ const ApproveRiders = () => {
                       <div className="avatar">
                         <div className="mask mask-squircle rounded-full h-10 w-10">
                           <img
-                            src={user?.photoURL || 'https://i.ibb.co.com/cKMpwWDT/images-1.png'}
+                            src={
+                              matchedUser?.photoURL || 'https://i.ibb.co.com/cKMpwWDT/images-1.png'
+                            }
                             alt="Rider Avatar"
                           />
                         </div>
@@ -140,7 +160,7 @@ const ApproveRiders = () => {
                   </td>
                   <td>
                     <p
-                      className={`${rider.status === 'approved' ? 'text-green-500' : 'text-red-500'}`}
+                      className={`capitalize font-semibold ${rider.status === 'approved' ? 'text-green-800' : 'text-red-500'}`}
                     >
                       {rider.status}
                     </p>

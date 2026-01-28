@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updatePassword,
   updateProfile,
 } from 'firebase/auth';
 import { useEffect, useState } from 'react';
@@ -45,6 +46,10 @@ const AuthProvider = ({ children }) => {
     return updateProfile(auth.currentUser, profile);
   };
 
+  // update password
+  const updateUserPassword = (newPassword) => {
+    return updatePassword(auth.currentUser, newPassword);
+  };
   // Observe user state
   useEffect(() => {
     // Firebase auth user state change হলে listen করে
@@ -68,6 +73,7 @@ const AuthProvider = ({ children }) => {
     signInGoogle,
     logOut,
     updateUserProfile,
+    updateUserPassword,
   };
 
   return (
