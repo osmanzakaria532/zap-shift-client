@@ -115,6 +115,7 @@ const ApproveRiders = () => {
               <th>District</th>
               <th>Submitted At</th>
               <th>Rider Status</th>
+              <th>Work Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -164,6 +165,14 @@ const ApproveRiders = () => {
                     >
                       {rider.status}
                     </p>
+                  </td>
+                  <td>
+                    {/* <p
+                      className={`capitalize font-semibold ${rider.workStatus === 'approved' ? 'text-green-800' : 'text-red-500'}`}
+                    >
+                      {rider.workStatus}
+                    </p> */}
+                    {rider.workStatus}
                   </td>
 
                   <td className="space-x-2.5">

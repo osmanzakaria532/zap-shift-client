@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useForm, useWatch } from 'react-hook-form';
 import { useLoaderData } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -12,6 +11,8 @@ const Rider = () => {
   // get user & axiosInstance
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+
+  console.log(user.photoURL);
 
   // get service centers data from loader
   const serviceCenters = useLoaderData();
@@ -31,12 +32,16 @@ const Rider = () => {
   const handleRiderApplication = (data) => {
     console.log(data);
 
-    axiosSecure.post('/riders', data).then((res) => {
+    const riderInfo = {
+      ...data,
+      photoURL: user?.photoURL || '',
+    };
+    axiosSecure.post('/riders', riderInfo).then((res) => {
       if (res.data.insertedId) {
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: 'Your appication has been submitted',
+          title: 'Your application has been submitted',
           showConfirmButton: false,
           timer: 1500,
         });
