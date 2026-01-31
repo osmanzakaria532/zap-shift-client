@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { FaRegEdit } from 'react-icons/fa';
 import { GoUnverified } from 'react-icons/go';
 import { MdDeleteSweep } from 'react-icons/md';
+import { Link } from 'react-router';
 import Swal from 'sweetalert2';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
@@ -24,7 +25,7 @@ const MyParcels = () => {
     },
   });
   // console.log('USER EMAIL:', user?.email);
-  console.log('My Parcels', parcels);
+  // console.log('My Parcels', parcels);
 
   // console.log('in my parcel ', parcels);
 
@@ -70,6 +71,7 @@ const MyParcels = () => {
       senderEmail: parcel.senderEmail,
       parcelName: parcel.parcelName,
       frontendUrl: window.location.origin, // ekhane dynamic frontend URL pathacchi
+      trackingId: parcel.trackingId,
     };
 
     const res = await axiosSecure.post('/payment-checkout-session', paymentInfo);
@@ -78,7 +80,7 @@ const MyParcels = () => {
   };
   return (
     <div>
-      <h3>My parcels : {parcels.length}</h3>
+      <h3 className="font-semibold text-xl">My parcels : {parcels.length}</h3>
       <div className="overflow-x-auto">
         <table className="table table-zebra">
           {/* head */}
@@ -123,7 +125,9 @@ const MyParcels = () => {
                 <td>{parcel.cost}</td>
                 <td>{parcel.parcelType}</td>
                 <td>{parcel.parcelWeight}</td>
-                <td>{parcel.trackingId}</td>
+                <td>
+                  <Link to={`/parcel-tracking/${parcel.trackingId}`}>{parcel.trackingId}</Link>
+                </td>
                 <td>{parcel.receiverRegion}</td>
                 <td>{parcel.receiverDistrict}</td>
                 <td>

@@ -16,9 +16,9 @@ const PaymentHistory = () => {
     },
   });
 
-  console.log('user:', user);
-  console.log('email:', user?.email);
-  console.log('payments:', payments);
+  // console.log('user:', user);
+  // console.log('email:', user?.email);
+  // console.log('payments:', payments);
 
   const handlePaymentDetails = (parcelId) => {
     console.log(parcelId);

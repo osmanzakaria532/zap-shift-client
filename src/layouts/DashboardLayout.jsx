@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import { BsBox, BsBoxes } from 'react-icons/bs';
-import { FaHistory, FaUsers } from 'react-icons/fa';
+import { FaCheckCircle, FaHistory, FaTasks, FaUsers } from 'react-icons/fa';
 import { GiScooter } from 'react-icons/gi';
 import { IoIosArrowDown, IoIosNotificationsOutline } from 'react-icons/io';
-import { MdDeliveryDining, MdElectricBike, MdOutlineAssignment } from 'react-icons/md';
+import { MdElectricBike, MdOutlineAssignment } from 'react-icons/md';
+import { SiGoogletasks } from 'react-icons/si';
 import { Link, NavLink, Outlet } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import useRole from '../hooks/useRole';
@@ -91,7 +92,7 @@ const DashboardLayout = () => {
                         (user.displayName.split(' ').length > 2 ? ' ...' : '')
                       : 'User Name'}
                   </h2> */}
-                  <h2>{user?.displayName ? user?.displayName.slice(0, 14) : 'User Name'}</h2>
+                  <h2>{user?.displayName ? user?.displayName.slice(0, 15) : 'User Name'}</h2>
                   <p>{role}</p>
                 </div>
                 {show && (
@@ -172,6 +173,13 @@ const DashboardLayout = () => {
             <li>
               <NavItem to="/dashboard/payment-history" icon={FaHistory} label="Payment History" />
             </li>
+            {/* <li>
+              <NavItem
+                to="/dashboard/parcel-tracking"
+                icon={FaTruckMoving}
+                label="Parcel Tracking"
+              />
+            </li> */}
 
             {/* admin route only */}
             {role === 'admin' && (
@@ -190,6 +198,15 @@ const DashboardLayout = () => {
             {role === 'admin' && (
               <li>
                 <NavItem to="/dashboard/all-riders" icon={GiScooter} label="All Riders" />
+              </li>
+            )}
+            {role === 'admin' && (
+              <li>
+                <NavItem
+                  to="/dashboard/parcel-deliveried"
+                  icon={FaCheckCircle}
+                  label="Parcel Deliveried"
+                />
               </li>
             )}
 
@@ -218,9 +235,16 @@ const DashboardLayout = () => {
               <>
                 <li>
                   <NavItem
-                    to="/dashboard/assigned-delivereis"
-                    icon={MdDeliveryDining}
+                    to="/dashboard/assigned-deliveries"
+                    icon={FaTasks}
                     label="Assigned Delivereis"
+                  />
+                </li>
+                <li>
+                  <NavItem
+                    to="/dashboard/complated-deliveries"
+                    icon={SiGoogletasks}
+                    label="Complated Delivereis"
                   />
                 </li>
               </>

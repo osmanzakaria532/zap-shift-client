@@ -40,6 +40,9 @@ const AllParcels = () => {
   const parcelsToPickup = parcels.filter(
     (p) => p.deliveryStatus?.toLowerCase() === 'pending-pickup',
   ).length;
+  const parcelsAssigned = parcels.filter(
+    (p) => p.deliveryStatus?.toLowerCase() === 'driver-assigned',
+  ).length;
 
   const handleDeleteParcel = (parcelId) => {
     // console.log('Delete parcel with ID:', parcelId);
@@ -65,9 +68,9 @@ const AllParcels = () => {
             Paid Parcels: <span>{paidParcels}</span>
           </div>
           <div className="text-yellow-600">Parcels To Pickup: {parcelsToPickup}</div>
-          {/* <div className="text-red-600">
-          Rejected: <span>{totalRejected}</span>
-        </div> */}
+          <div className="text-gray-700-600">
+            Parcels Assigned: <span>{parcelsAssigned}</span>
+          </div>
         </div>
         <div>
           {/* <p>{searchText}</p> */}
